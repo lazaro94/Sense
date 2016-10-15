@@ -14,6 +14,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class EditSponsor {
 
@@ -54,6 +56,11 @@ public class EditSponsor {
 	 */
 	private void initialize() {
 		frmEdit = new JFrame();
+		frmEdit.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+			}
+		});
 		frmEdit.setBounds(100, 100, 450, 300);
 		frmEdit.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmEdit.getContentPane().setLayout(null);
@@ -142,7 +149,7 @@ public class EditSponsor {
 	private void clickGuardar(){
 		Sponsor s = new Sponsor();
 		s=mapearDeFormulario();
-		
+		PanelABMSponsor abm = new PanelABMSponsor();
 		try{
 			ls = new LogicSponsors();
 			if(s.getId()>0){
@@ -153,6 +160,7 @@ public class EditSponsor {
 				ls.InsertSponsor(s);
 				informarUsuario("Sponsor ingresado correctamente", "Modificar Sponsors");
 			}
+			abm.actualizarTabla();
 			frmEdit.dispose();
 		}
 		catch(SQLException sqlex){

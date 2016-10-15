@@ -25,9 +25,6 @@ public class PanelABMSponsor extends JPanel{
 		tableSponsors = new JTable();
 		add(tableSponsors, BorderLayout.CENTER);
 		
-		JLabel lblSponsors = new JLabel("Sponsors");
-		add(lblSponsors, BorderLayout.NORTH);
-		
 		JPanel panel = new JPanel();
 		add(panel, BorderLayout.SOUTH);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
@@ -61,10 +58,11 @@ public class PanelABMSponsor extends JPanel{
 			}
 		});
 		panel.add(btnEliminar);
-		rellenarTabla();
+		actualizarTabla();
 	}
 	
-	private void rellenarTabla(){
+	public void actualizarTabla(){
+		tableSponsors.removeAll();
 		ArrayList<Sponsor> sponsors = new ArrayList<Sponsor>();
 		String[] columnas = {"IdSponsors","Cuit","Razon Social","Direccion"};
 		DefaultTableModel tableModel = new DefaultTableModel();
@@ -159,6 +157,7 @@ public class PanelABMSponsor extends JPanel{
 		try{
 			s=mapearDeTabla();
 			ls.DeleteSponsor(s);
+			tableSponsors.removeRowSelectionInterval(tableSponsors.getSelectedRow(), tableSponsors.getSelectedRow());
 			informarUsuario("Sponsor eliminado correctamente", "Eliminar Sponsor");
 		}
 		catch(SQLException sqlex){

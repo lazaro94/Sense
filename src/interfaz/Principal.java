@@ -52,7 +52,7 @@ public class Principal {
 		frame.getContentPane().add(panel, BorderLayout.WEST);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		
-		JLabel label = new JLabel("");
+		JLabel label = new JLabel("   ");
 		panel.add(label);
 		
 		JButton btnSponsors = new JButton("Sponsors");
