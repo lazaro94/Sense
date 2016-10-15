@@ -4,16 +4,17 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import javax.swing.JPanel;
-import java.awt.GridLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Principal {
 
 	private JFrame frame;
+	private JPanel panelCentral;
 
 	/**
 	 * Launch the application.
@@ -47,9 +48,32 @@ public class Principal {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		Administracion adm = new Administracion();
-		frame.getContentPane().add(adm,  BorderLayout.WEST);
+		JPanel panel = new JPanel();
+		frame.getContentPane().add(panel, BorderLayout.WEST);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		
+		JLabel label = new JLabel("");
+		panel.add(label);
+		
+		JButton btnSponsors = new JButton("Sponsors");
+		btnSponsors.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clickSponsors();
+			}
+		});
+		panel.add(btnSponsors);
+		
+		panelCentral = new JPanel();
+		frame.getContentPane().add(panelCentral, BorderLayout.CENTER);
 	
+	}
+	
+	private void clickSponsors(){
+		PanelABMSponsor abm = new PanelABMSponsor();
+		panelCentral.removeAll();
+		panelCentral.add(abm, BorderLayout.CENTER);
+		panelCentral.revalidate();
+		panelCentral.repaint();
 	}
 
 }

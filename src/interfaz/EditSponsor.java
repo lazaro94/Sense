@@ -1,0 +1,172 @@
+package interfaz;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+
+import entidades.Sponsor;
+import logica.LogicSponsors;
+
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.awt.event.ActionEvent;
+
+public class EditSponsor {
+
+	private JFrame frmEdit;
+	private JTextField txtRazonSocial;
+	private JTextField txtCuit;
+	private JTextField txtCalle;
+	private JTextField textField_3;
+	private JLabel lblId;
+	
+	private LogicSponsors ls = null;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					EditSponsor window = new EditSponsor();
+					window.frmEdit.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public EditSponsor() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frmEdit = new JFrame();
+		frmEdit.setBounds(100, 100, 450, 300);
+		frmEdit.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmEdit.getContentPane().setLayout(null);
+		
+		lblId = new JLabel("Id");
+		lblId.setBounds(368, 12, 70, 15);
+		frmEdit.getContentPane().add(lblId);
+		lblId.setVisible(false);
+		
+		JLabel lblRazonSocial = new JLabel("Razon Social:");
+		lblRazonSocial.setBounds(12, 30, 104, 15);
+		frmEdit.getContentPane().add(lblRazonSocial);
+		
+		txtRazonSocial = new JTextField();
+		txtRazonSocial.setBounds(120, 28, 205, 19);
+		frmEdit.getContentPane().add(txtRazonSocial);
+		txtRazonSocial.setColumns(10);
+		
+		JLabel lblCuit = new JLabel("CUIT:");
+		lblCuit.setBounds(12, 70, 70, 15);
+		frmEdit.getContentPane().add(lblCuit);
+		
+		txtCuit = new JTextField();
+		txtCuit.setBounds(55, 68, 140, 19);
+		frmEdit.getContentPane().add(txtCuit);
+		txtCuit.setColumns(10);
+		
+		JLabel lblCalle = new JLabel("Calle:");
+		lblCalle.setBounds(12, 106, 70, 15);
+		frmEdit.getContentPane().add(lblCalle);
+		
+		txtCalle = new JTextField();
+		txtCalle.setBounds(65, 104, 182, 19);
+		frmEdit.getContentPane().add(txtCalle);
+		txtCalle.setColumns(10);
+		
+		JLabel lblNumero = new JLabel("Numero:");
+		lblNumero.setBounds(265, 106, 70, 15);
+		frmEdit.getContentPane().add(lblNumero);
+		
+		textField_3 = new JTextField();
+		textField_3.setBounds(335, 104, 88, 19);
+		frmEdit.getContentPane().add(textField_3);
+		textField_3.setColumns(10);
+		
+		JButton btnGuardar = new JButton("Guardar");
+		btnGuardar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clickGuardar();
+			}
+		});
+		btnGuardar.setBounds(247, 206, 117, 37);
+		frmEdit.getContentPane().add(btnGuardar);
+		
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clickCancelar();
+			}
+		});
+		btnCancelar.setBounds(94, 206, 117, 44);
+		frmEdit.getContentPane().add(btnCancelar);
+	}
+	
+	public void open(Sponsor s){
+		mapearAFormulario(s);
+		frmEdit.setVisible(true);		
+	}
+
+	private void mapearAFormulario(Sponsor s){
+		lblId.setText(Integer.toString(s.getId()));
+		txtCuit.setText(s.getCuit());
+		txtCalle.setText(s.getDireccion());
+		txtRazonSocial.setText(s.getRazonSocial());		
+	}
+	
+	private Sponsor mapearDeFormulario(){
+		 Sponsor s = new Sponsor(Integer.parseInt(lblId.getText()), txtRazonSocial.getText(), txtCuit.getText(), txtCalle.getText());
+		 return s;
+	}
+	
+	private void clickCancelar(){
+		frmEdit.dispose();
+	}
+	
+	private void clickGuardar(){
+		Sponsor s = new Sponsor();
+		s=mapearDeFormulario();
+		
+		try{
+			ls = new LogicSponsors();
+			if(s.getId()>0){
+				ls.updateSponsor(s);
+				informarUsuario("Sponsor actualizado correctamente", "Modificar Sponsors");
+			}
+			else {
+				ls.InsertSponsor(s);
+				informarUsuario("Sponsor ingresado correctamente", "Modificar Sponsors");
+			}
+			frmEdit.dispose();
+		}
+		catch(SQLException sqlex){
+			informarError(sqlex.getMessage(), "Modificar sponsors");
+		}
+		catch(Exception ex){
+			informarError(ex.getMessage(), "Modificar sponsors");			
+		}
+	}
+	
+	private void informarError(String mensaje, String titulo){
+		JOptionPane.showMessageDialog(frmEdit, mensaje, titulo, JOptionPane.ERROR_MESSAGE);
+	}
+	private void informarUsuario(String mensaje, String titulo){
+		JOptionPane.showMessageDialog(frmEdit, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
+	}
+}
