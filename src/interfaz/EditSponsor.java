@@ -23,7 +23,7 @@ public class EditSponsor {
 	private JTextField txtRazonSocial;
 	private JTextField txtCuit;
 	private JTextField txtCalle;
-	private JTextField textField_3;
+	private JTextField txtNumero;
 	private JLabel lblId;
 	
 	private LogicSponsors ls = null;
@@ -101,10 +101,10 @@ public class EditSponsor {
 		lblNumero.setBounds(265, 106, 70, 15);
 		frmEdit.getContentPane().add(lblNumero);
 		
-		textField_3 = new JTextField();
-		textField_3.setBounds(335, 104, 88, 19);
-		frmEdit.getContentPane().add(textField_3);
-		textField_3.setColumns(10);
+		txtNumero = new JTextField();
+		txtNumero.setBounds(335, 104, 88, 19);
+		frmEdit.getContentPane().add(txtNumero);
+		txtNumero.setColumns(10);
 		
 		JButton btnGuardar = new JButton("Guardar");
 		btnGuardar.addActionListener(new ActionListener() {
@@ -133,12 +133,13 @@ public class EditSponsor {
 	private void mapearAFormulario(Sponsor s){
 		lblId.setText(Integer.toString(s.getId()));
 		txtCuit.setText(s.getCuit());
-		txtCalle.setText(s.getDireccion());
-		txtRazonSocial.setText(s.getRazonSocial());		
+		txtCalle.setText(s.getCalle());
+		txtRazonSocial.setText(s.getRazonSocial());
+		txtNumero.setText(s.getNumero());
 	}
 	
 	private Sponsor mapearDeFormulario(){
-		 Sponsor s = new Sponsor(Integer.parseInt(lblId.getText()), txtRazonSocial.getText(), txtCuit.getText(), txtCalle.getText());
+		 Sponsor s = new Sponsor(Integer.parseInt(lblId.getText()), txtRazonSocial.getText(), txtCuit.getText(), txtCalle.getText(), txtNumero.getText());
 		 return s;
 	}
 	
@@ -149,7 +150,7 @@ public class EditSponsor {
 	private void clickGuardar(){
 		Sponsor s = new Sponsor();
 		s=mapearDeFormulario();
-		PanelABMSponsor abm = new PanelABMSponsor();
+		PanelSponsor abm = new PanelSponsor();
 		try{
 			ls = new LogicSponsors();
 			if(s.getId()>0){

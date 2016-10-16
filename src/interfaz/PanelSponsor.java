@@ -16,10 +16,10 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class PanelABMSponsor extends JPanel{
+public class PanelSponsor extends JPanel{
 	private JTable tableSponsors;
 	private LogicSponsors ls = null;
-	public PanelABMSponsor() {
+	public PanelSponsor() {
 		setLayout(new BorderLayout(0, 0));
 		
 		tableSponsors = new JTable();
@@ -62,9 +62,9 @@ public class PanelABMSponsor extends JPanel{
 	}
 	
 	public void actualizarTabla(){
-		tableSponsors.removeAll();
+		//DECLARACION VARIABLES
 		ArrayList<Sponsor> sponsors = new ArrayList<Sponsor>();
-		String[] columnas = {"IdSponsors","Cuit","Razon Social","Direccion"};
+		String[] columnas = {"IdSponsors","Cuit","Razon Social","Direccion", "Numero"};
 		DefaultTableModel tableModel = new DefaultTableModel();
 		ls = new LogicSponsors();
 		
@@ -77,13 +77,16 @@ public class PanelABMSponsor extends JPanel{
 				fila[0] = sponsors.get(i).getId();
 				fila[1] = sponsors.get(i).getCuit();
 				fila[2] = sponsors.get(i).getRazonSocial();
-				fila[3] = sponsors.get(i).getDireccion();
+				fila[3] = sponsors.get(i).getCalle();
+				fila[4] = sponsors.get(i).getNumero();
 				tableModel.addRow(fila);
 				}
 			tableSponsors.setModel(tableModel);
+			//Seteo ancho de columnas
 			tableSponsors.getColumnModel().getColumn(1).setPreferredWidth(115);
 			tableSponsors.getColumnModel().getColumn(2).setPreferredWidth(150);
 			tableSponsors.getColumnModel().getColumn(3).setPreferredWidth(200);
+			tableSponsors.getColumnModel().getColumn(4).setPreferredWidth(70);
 			//Oculto columna de IdPersonaje
             tableSponsors.getColumnModel().getColumn(0).setMaxWidth(0);
             tableSponsors.getColumnModel().getColumn(0).setMinWidth(0);
@@ -102,9 +105,9 @@ public class PanelABMSponsor extends JPanel{
 		int id= Integer.parseInt(String.valueOf(tableSponsors.getValueAt(tableSponsors.getSelectedRow(), 0)));
 		String razonSocial = String.valueOf(tableSponsors.getValueAt(tableSponsors.getSelectedRow(), 2));
 		String cuit = String.valueOf(tableSponsors.getValueAt(tableSponsors.getSelectedRow(), 1));
-		String direccion = String.valueOf(tableSponsors.getValueAt(tableSponsors.getSelectedRow(), 3));
-		
-		Sponsor s = new Sponsor(id, razonSocial, cuit, direccion);
+		String calle = String.valueOf(tableSponsors.getValueAt(tableSponsors.getSelectedRow(), 3));
+		String numero = String.valueOf(tableSponsors.getValueAt(tableSponsors.getSelectedRow(), 4));
+		Sponsor s = new Sponsor(id, razonSocial, cuit, calle, numero);
 		return s;
 	}
 	

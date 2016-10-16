@@ -4,16 +4,18 @@ public class Sponsor {
 	
 	private String razonSocial;
 	private String cuit;
-	private String direccion;
+	private String calle;
+	private String numero;
 	private int id;
 	
 	//Constructores
 	
-	public Sponsor (int id, String razonSocial, String cuit, String direccion){
+	public Sponsor (int id, String razonSocial, String cuit, String direccion, String numero){
 		this.id=id;
 		this.razonSocial=razonSocial;
-		this.direccion=direccion;
+		this.calle=direccion;
 		this.cuit=cuit;
+		this.numero=numero;
 	}
 	
 	public Sponsor(){
@@ -33,11 +35,11 @@ public class Sponsor {
 	public void setCuit(String cuit) {
 		this.cuit = cuit;
 	}
-	public String getDireccion() {
-		return direccion;
+	public String getCalle() {
+		return calle;
 	}
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
+	public void setCalle(String direccion) {
+		this.calle = direccion;
 	}
 	public int getId() {
 		return id;
@@ -45,6 +47,17 @@ public class Sponsor {
 	public void setId(int id) {
 		this.id = id;
 	}
-
+	public String getNumero() {
+		return numero;
+	}
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+	
+	//Uso este override para llenar el comboBox
+	@Override
+	public String toString(){
+		return this.getRazonSocial();
+	}
 	
 }

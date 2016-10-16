@@ -48,12 +48,12 @@ public class Principal {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel = new JPanel();
-		frame.getContentPane().add(panel, BorderLayout.WEST);
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		JPanel panelizq = new JPanel();
+		frame.getContentPane().add(panelizq, BorderLayout.WEST);
+		panelizq.setLayout(new BoxLayout(panelizq, BoxLayout.Y_AXIS));
 		
 		JLabel label = new JLabel("   ");
-		panel.add(label);
+		panelizq.add(label);
 		
 		JButton btnSponsors = new JButton("Sponsors");
 		btnSponsors.addActionListener(new ActionListener() {
@@ -61,7 +61,18 @@ public class Principal {
 				clickSponsors();
 			}
 		});
-		panel.add(btnSponsors);
+		panelizq.add(btnSponsors);
+		
+		JLabel label_1 = new JLabel("  ");
+		panelizq.add(label_1);
+		
+		JButton btnPublicidades = new JButton("Publicidades");
+		btnPublicidades.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clickPublicidades();
+			}
+		});
+		panelizq.add(btnPublicidades);
 		
 		panelCentral = new JPanel();
 		frame.getContentPane().add(panelCentral, BorderLayout.CENTER);
@@ -69,9 +80,17 @@ public class Principal {
 	}
 	
 	private void clickSponsors(){
-		PanelABMSponsor abm = new PanelABMSponsor();
+		PanelSponsor abm = new PanelSponsor();
 		panelCentral.removeAll();
 		panelCentral.add(abm, BorderLayout.CENTER);
+		panelCentral.revalidate();
+		panelCentral.repaint();
+	}
+	
+	private void clickPublicidades(){
+		PanelPublicidades publicidades = new PanelPublicidades();
+		panelCentral.removeAll();
+		panelCentral.add(publicidades);
 		panelCentral.revalidate();
 		panelCentral.repaint();
 	}
