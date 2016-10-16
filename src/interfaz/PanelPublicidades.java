@@ -16,6 +16,7 @@ import entidades.Sponsor;
 import logica.LogicPublicidad;
 import logica.LogicSponsors;
 import util.AppException;
+import util.Validate;
 
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -31,10 +32,10 @@ public class PanelPublicidades extends JPanel {
 	private JTextField txtFechaIni;
 	private JTextField txtFechaFin;
 	private JTextField txtMonto;
-	private JTextField txtFechaPago;
 	private JLabel lblSponsor;
 	private JComboBox comboSponsors;
 	private LogicPublicidad lp = null;
+	private JComboBox comboDias;
 
 	/**
 	 * Create the panel.
@@ -56,10 +57,7 @@ public class PanelPublicidades extends JPanel {
 		txtMonto = new JTextField();
 		txtMonto.setColumns(10);
 		
-		JLabel lblFechaDePago = new JLabel("Fecha de pago:");
-		
-		txtFechaPago = new JTextField();
-		txtFechaPago.setColumns(10);
+		JLabel lblFechaDePago = new JLabel("Dia de pago:");
 		
 		lblSponsor = new JLabel("Sponsor:");
 		
@@ -78,6 +76,8 @@ public class PanelPublicidades extends JPanel {
 		});
 		
 		comboSponsors = new JComboBox();
+		
+		comboDias = new JComboBox();
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
@@ -106,12 +106,13 @@ public class PanelPublicidades extends JPanel {
 											.addPreferredGap(ComponentPlacement.UNRELATED)
 											.addComponent(lblFechaDePago)
 											.addPreferredGap(ComponentPlacement.RELATED)
-											.addComponent(txtFechaPago, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))))
+											.addComponent(comboDias, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)))
+									.addGap(139))))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(31)
 							.addComponent(lblSponsor)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(comboSponsors, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(comboSponsors, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap(292, Short.MAX_VALUE)
@@ -121,11 +122,11 @@ public class PanelPublicidades extends JPanel {
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(156)
+					.addContainerGap(133, Short.MAX_VALUE)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblSponsor)
 						.addComponent(comboSponsors, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(txtFechaFin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(txtFechaIni, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -136,12 +137,12 @@ public class PanelPublicidades extends JPanel {
 						.addComponent(lblMonto)
 						.addComponent(txtMonto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblFechaDePago)
-						.addComponent(txtFechaPago, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(comboDias, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnGuardar)
 						.addComponent(btnCancelar))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addContainerGap(24, Short.MAX_VALUE))
 		);
 		setLayout(groupLayout);
 		llenarCombo();
@@ -176,13 +177,24 @@ public class PanelPublicidades extends JPanel {
 		this.removeAll();
 	}
 	private void clickGuardar(){
+		/*
+		 * Validar que los campos no estén vacíos.
+		 * Validar que se haya seleccionado un Sponsor.
+		 * Validar que el formato de fechas sea correcto.
+		 * Validar que la fecha fin no sea menor que la fecha inicio.
+		 * Validar que se haya seleccionado un elemento del combo de dias.
+		 * Validar que el monto contenga sólo numeros.
+		 */
+		if(!validarSeleccion()){
+			return;
+		}
 		lp= new LogicPublicidad();
 		Sponsor s = new Sponsor();
 		Double monto;
 		try{
 			monto = Double.parseDouble(txtMonto.getText());
 			s.setRazonSocial(String.valueOf(comboSponsors.getSelectedItem()));
-			lp.createPublicidad(s, convertFecha(txtFechaIni.getText()), convertFecha(txtFechaFin.getText()), Integer.parseInt(txtFechaPago.getText()), monto);
+			lp.createPublicidad(s, convertFecha(txtFechaIni.getText()), convertFecha(txtFechaFin.getText()), Integer.parseInt(comboDias.getSelectedItem().toString()), monto);
 			informarUsuario("Publicidad guardad correctamente", "Agregar Publicidad");
 		}
 		catch(ParseException pex){
@@ -194,6 +206,28 @@ public class PanelPublicidades extends JPanel {
 		catch(Exception ex){
 			informarError(ex.getMessage(), "Agregar Publicidad");
 		}		
+	}
+	
+	private boolean validarSeleccion(){
+		Validate v = new Validate();
+		String[] campos = {txtFechaIni.getText(), txtFechaFin.getText(), txtMonto.getText()};
+		String[] monto = {txtMonto.getText()};
+		if(!v.notEmpty(campos)){
+			informarError("Estos campos no pueden quedar vacios.", "Guardar publicidad");
+			return false;
+		}
+		if(comboSponsors.getSelectedIndex()<0){
+			informarError("Debe seleccionar un sponsor.", "Guardar publicidad");
+			return false;
+		}
+		if(comboDias.getSelectedIndex()<0){
+			informarError("Debe seleccionar un dia de pago.", "Guardar publicidad");
+		}
+		if(!v.numeroDecimal(monto)){
+			informarError("El campo monto debe contener un numero decimal", "Guardar publicidad");
+			return false;
+		}
+		return true;
 	}
 	
 	private java.sql.Date convertFecha(String fecha) throws Exception{
