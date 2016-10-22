@@ -3,18 +3,22 @@ package logica;
 import java.sql.Date;
 import java.sql.SQLException;
 
+import datos.DataContrato;
 import datos.DataSponsor;
 import entidades.Sponsor;
 
-public class LogicPublicidad {
+public class LogicContrato {
 	
 	private DataSponsor ds = null;
+	private DataContrato dc = null;
 	
-	public void createPublicidad(Sponsor s, Date fechaInicio, Date fechaFin, int diaPago, Double monto) throws Exception{		
+	public void createPublicidad(Sponsor s, Date fechaInicio, Date fechaFin, int diaPago, Double monto, String codigo) throws Exception{		
 		ds = new DataSponsor();
+		dc = new DataContrato();
 		try{
 			s=ds.getIdByRS(s);
-			ds.insertPublicidad(s, fechaInicio, fechaFin, diaPago, monto);
+			
+			dc.insertPublicidad(s, fechaInicio, fechaFin, diaPago, monto, codigo);
 		}
 		catch(SQLException sqlex){
 			throw sqlex;
@@ -22,6 +26,10 @@ public class LogicPublicidad {
 		catch(Exception ex){
 			throw ex;
 		}
+	}
+	
+	public void registrarPago(){
+		
 	}
 
 }

@@ -6,16 +6,18 @@ public class Sponsor {
 	private String cuit;
 	private String calle;
 	private String numero;
+	private String comentario;
 	private int id;
 	
 	//Constructores
 	
-	public Sponsor (int id, String razonSocial, String cuit, String direccion, String numero){
+	public Sponsor (int id, String razonSocial, String cuit, String direccion, String numero, String comentario){
 		this.id=id;
 		this.razonSocial=razonSocial;
 		this.calle=direccion;
 		this.cuit=cuit;
 		this.numero=numero;
+		this.comentario=comentario;
 	}
 	
 	public Sponsor(){
@@ -23,6 +25,12 @@ public class Sponsor {
 	}
 	
 	//GETTERS Y SETTERS
+	public String getComentario(){
+		return comentario;
+	}
+	public void setComentario(String comentario){
+		this.comentario=comentario;
+	}
 	public String getRazonSocial() {
 		return razonSocial;
 	}

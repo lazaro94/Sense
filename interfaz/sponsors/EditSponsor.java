@@ -1,4 +1,4 @@
-package interfaz;
+package sponsors;
 
 import java.awt.EventQueue;
 
@@ -27,6 +27,7 @@ public class EditSponsor {
 	private JLabel lblId;
 	
 	private LogicSponsors ls = null;
+	private JTextField txtComentario;
 
 	/**
 	 * Launch the application.
@@ -121,8 +122,17 @@ public class EditSponsor {
 				clickCancelar();
 			}
 		});
-		btnCancelar.setBounds(94, 206, 117, 44);
+		btnCancelar.setBounds(94, 206, 117, 37);
 		frmEdit.getContentPane().add(btnCancelar);
+		
+		JLabel lblComentario = new JLabel("Comentario:");
+		lblComentario.setBounds(12, 152, 104, 15);
+		frmEdit.getContentPane().add(lblComentario);
+		
+		txtComentario = new JTextField();
+		txtComentario.setBounds(105, 150, 333, 19);
+		frmEdit.getContentPane().add(txtComentario);
+		txtComentario.setColumns(10);
 	}
 	
 	public void open(Sponsor s){
@@ -136,10 +146,11 @@ public class EditSponsor {
 		txtCalle.setText(s.getCalle());
 		txtRazonSocial.setText(s.getRazonSocial());
 		txtNumero.setText(s.getNumero());
+		txtComentario.setText(s.getComentario());
 	}
 	
 	private Sponsor mapearDeFormulario(){
-		 Sponsor s = new Sponsor(Integer.parseInt(lblId.getText()), txtRazonSocial.getText(), txtCuit.getText(), txtCalle.getText(), txtNumero.getText());
+		 Sponsor s = new Sponsor(Integer.parseInt(lblId.getText()), txtRazonSocial.getText(), txtCuit.getText(), txtCalle.getText(), txtNumero.getText(), txtComentario.getText());
 		 return s;
 	}
 	

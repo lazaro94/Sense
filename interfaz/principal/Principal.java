@@ -1,10 +1,15 @@
-package interfaz;
+package principal;
 
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
+
+import contratos.PanelContrato;
+import gestionCobro.PanelGestionCobro;
+import sponsors.PanelSponsor;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -13,7 +18,7 @@ import java.awt.event.ActionEvent;
 
 public class Principal {
 
-	private JFrame frame;
+	private JFrame frmSenseFilms;
 	private JPanel panelCentral;
 
 	/**
@@ -24,7 +29,7 @@ public class Principal {
 			public void run() {
 				try {
 					Principal window = new Principal();
-					window.frame.setVisible(true);
+					window.frmSenseFilms.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -43,13 +48,14 @@ public class Principal {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 800, 600);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new BorderLayout(0, 0));
+		frmSenseFilms = new JFrame();
+		frmSenseFilms.setTitle("Sense Films");
+		frmSenseFilms.setBounds(100, 100, 900, 700);
+		frmSenseFilms.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmSenseFilms.getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelizq = new JPanel();
-		frame.getContentPane().add(panelizq, BorderLayout.WEST);
+		frmSenseFilms.getContentPane().add(panelizq, BorderLayout.WEST);
 		panelizq.setLayout(new BoxLayout(panelizq, BoxLayout.Y_AXIS));
 		
 		JLabel label = new JLabel("   ");
@@ -66,16 +72,27 @@ public class Principal {
 		JLabel label_1 = new JLabel("  ");
 		panelizq.add(label_1);
 		
-		JButton btnPublicidades = new JButton("Publicidades");
-		btnPublicidades.addActionListener(new ActionListener() {
+		JButton btnContratos = new JButton("Contratos");
+		btnContratos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				clickPublicidades();
 			}
 		});
-		panelizq.add(btnPublicidades);
+		panelizq.add(btnContratos);
+		
+		JLabel label_2 = new JLabel("  ");
+		panelizq.add(label_2);
+		
+		JButton btnGestionCobros = new JButton("Gestion Cobros");
+		btnGestionCobros.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				gestionCobros();
+			}
+		});
+		panelizq.add(btnGestionCobros);
 		
 		panelCentral = new JPanel();
-		frame.getContentPane().add(panelCentral, BorderLayout.CENTER);
+		frmSenseFilms.getContentPane().add(panelCentral, BorderLayout.CENTER);
 	
 	}
 	
@@ -88,9 +105,16 @@ public class Principal {
 	}
 	
 	private void clickPublicidades(){
-		PanelPublicidades publicidades = new PanelPublicidades();
+		PanelContrato publicidades = new PanelContrato();
 		panelCentral.removeAll();
 		panelCentral.add(publicidades);
+		panelCentral.revalidate();
+		panelCentral.repaint();
+	}
+	private void gestionCobros(){
+		PanelGestionCobro gc = new PanelGestionCobro();
+		panelCentral.removeAll();
+		panelCentral.add(gc);
 		panelCentral.revalidate();
 		panelCentral.repaint();
 	}

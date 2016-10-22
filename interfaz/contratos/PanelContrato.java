@@ -1,4 +1,4 @@
-package interfaz;
+package contratos;
 
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;
@@ -13,7 +13,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
 
 import entidades.Sponsor;
-import logica.LogicPublicidad;
+import logica.LogicContrato;
 import logica.LogicSponsors;
 import util.AppException;
 import util.Validate;
@@ -28,19 +28,21 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.JComboBox;
 
-public class PanelPublicidades extends JPanel {
+public class PanelContrato extends JPanel {
 	private JTextField txtFechaIni;
 	private JTextField txtFechaFin;
 	private JTextField txtMonto;
 	private JLabel lblSponsor;
 	private JComboBox comboSponsors;
-	private LogicPublicidad lp = null;
-	private JComboBox comboDias;
+	private LogicContrato lc = null;
+	private JComboBox<String> comboDias;
+	private JTextField txtComentario;
+	private JTextField txtCodigo;
 
 	/**
 	 * Create the panel.
 	 */
-	public PanelPublicidades() {
+	public PanelContrato() {
 		
 		txtFechaIni = new JTextField();
 		txtFechaIni.setColumns(10);
@@ -77,55 +79,90 @@ public class PanelPublicidades extends JPanel {
 		
 		comboSponsors = new JComboBox();
 		
-		comboDias = new JComboBox();
+		comboDias = new JComboBox<String>();
+		for(int i=1; i<=30; i++){
+			comboDias.addItem(String.valueOf(i));
+		}
+		
+		JLabel lblComentario = new JLabel("Comentario:");
+		
+		txtComentario = new JTextField();
+		txtComentario.setColumns(10);
+		
+		JLabel label = new JLabel("<Nuevo Contrato>");
+		
+		JLabel lblCodigo = new JLabel("Codigo:");
+		
+		txtCodigo = new JTextField();
+		txtCodigo.setColumns(10);
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
+			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(lblFechaDeInicio)
-									.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addComponent(txtFechaIni, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(lblFechaDeFin)
-									.addGap(17)
-									.addComponent(txtFechaFin, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(lblMonto)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addGroup(groupLayout.createSequentialGroup()
-											.addGap(12)
-											.addComponent(btnCancelar))
-										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(txtMonto, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE)
-											.addPreferredGap(ComponentPlacement.UNRELATED)
-											.addComponent(lblFechaDePago)
-											.addPreferredGap(ComponentPlacement.RELATED)
-											.addComponent(comboDias, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)))
-									.addGap(139))))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(31)
-							.addComponent(lblSponsor)
+							.addComponent(lblFechaDeInicio)
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(txtFechaIni, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(comboSponsors, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(lblFechaDeFin)
+							.addGap(17)
+							.addComponent(txtFechaFin, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(lblMonto)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(12)
+									.addComponent(btnCancelar))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(txtMonto, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(lblFechaDePago)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(comboDias, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)))
+							.addGap(139)))
 					.addContainerGap())
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap(292, Short.MAX_VALUE)
 					.addComponent(btnGuardar)
 					.addGap(94))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(23)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(lblSponsor)
+						.addComponent(lblComentario))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(comboSponsors, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(lblCodigo)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(txtCodigo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(txtComentario, GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE))
+					.addContainerGap())
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(98)
+					.addComponent(label)
+					.addContainerGap(249, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap(133, Short.MAX_VALUE)
+					.addGap(39)
+					.addComponent(label)
+					.addPreferredGap(ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblSponsor)
-						.addComponent(comboSponsors, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(comboSponsors, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblCodigo)
+						.addComponent(txtCodigo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(txtComentario, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblComentario))
 					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(txtFechaFin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -142,9 +179,10 @@ public class PanelPublicidades extends JPanel {
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnGuardar)
 						.addComponent(btnCancelar))
-					.addContainerGap(24, Short.MAX_VALUE))
+					.addContainerGap(22, Short.MAX_VALUE))
 		);
 		setLayout(groupLayout);
+		
 		llenarCombo();
 	}
 
@@ -188,23 +226,23 @@ public class PanelPublicidades extends JPanel {
 		if(!validarSeleccion()){
 			return;
 		}
-		lp= new LogicPublicidad();
+		lc= new LogicContrato();
 		Sponsor s = new Sponsor();
 		Double monto;
 		try{
 			monto = Double.parseDouble(txtMonto.getText());
 			s.setRazonSocial(String.valueOf(comboSponsors.getSelectedItem()));
-			lp.createPublicidad(s, convertFecha(txtFechaIni.getText()), convertFecha(txtFechaFin.getText()), Integer.parseInt(comboDias.getSelectedItem().toString()), monto);
-			informarUsuario("Publicidad guardad correctamente", "Agregar Publicidad");
+			lc.createPublicidad(s, convertFecha(txtFechaIni.getText()), convertFecha(txtFechaFin.getText()), Integer.parseInt(comboDias.getSelectedItem().toString()), monto, txtCodigo.getText());
+			informarUsuario("Contrato guardado correctamente", "Agregar Contrato");
 		}
 		catch(ParseException pex){
-			informarError(pex.getMessage(), "Agregar Publicidad");
+			informarError(pex.getMessage(), "Agregar Contrato");
 		}
 		catch(SQLException sqlex){
-			informarError(sqlex.getMessage(), "Agregar Publicidad");
+			informarError(sqlex.getMessage(), "Agregar Contrato");
 		}
 		catch(Exception ex){
-			informarError(ex.getMessage(), "Agregar Publicidad");
+			informarError(ex.getMessage(), "Agregar Contrato");
 		}		
 	}
 	
@@ -213,18 +251,22 @@ public class PanelPublicidades extends JPanel {
 		String[] campos = {txtFechaIni.getText(), txtFechaFin.getText(), txtMonto.getText()};
 		String[] monto = {txtMonto.getText()};
 		if(!v.notEmpty(campos)){
-			informarError("Estos campos no pueden quedar vacios.", "Guardar publicidad");
+			informarError("Estos campos no pueden quedar vacios.", "Guardar Contrato.");
 			return false;
 		}
 		if(comboSponsors.getSelectedIndex()<0){
-			informarError("Debe seleccionar un sponsor.", "Guardar publicidad");
+			informarError("Debe seleccionar un sponsor.", "Guardar Contrato.");
 			return false;
 		}
 		if(comboDias.getSelectedIndex()<0){
-			informarError("Debe seleccionar un dia de pago.", "Guardar publicidad");
+			informarError("Debe seleccionar un dia de pago.", "Guardar Contrato.");
 		}
 		if(!v.numeroDecimal(monto)){
-			informarError("El campo monto debe contener un numero decimal", "Guardar publicidad");
+			informarError("El campo monto debe contener un numero decimal", "Guardar Contrato.");
+			return false;
+		}
+		if(txtCodigo.getText().equals("")){
+			informarError("Debe ingresar un código de contrato", "Guardar Contrato.");
 			return false;
 		}
 		return true;

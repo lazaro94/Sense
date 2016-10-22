@@ -9,10 +9,10 @@ import util.AppException;
 public class FactoryConnection {
 
 	private String dbDriver="com.mysql.jdbc.Driver";
-	private String host="192.168.1.2";
+	private String host="rosariocdr.ddns.net";
 	private String port="3306";
-	private String user="sense";
-	private String pass="sense123";
+	private String user="remoteadm";
+	private String pass="Remote123";
 	private String db="sense";
 	private String dbType="mysql";
 	

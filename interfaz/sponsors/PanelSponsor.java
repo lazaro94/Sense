@@ -1,4 +1,4 @@
-package interfaz;
+package sponsors;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -64,7 +64,7 @@ public class PanelSponsor extends JPanel{
 	public void actualizarTabla(){
 		//DECLARACION VARIABLES
 		ArrayList<Sponsor> sponsors = new ArrayList<Sponsor>();
-		String[] columnas = {"IdSponsors","Cuit","Razon Social","Direccion", "Numero"};
+		String[] columnas = {"IdSponsors","Cuit","Razon Social","Direccion", "Numero", "Comentario"};
 		DefaultTableModel tableModel = new DefaultTableModel();
 		ls = new LogicSponsors();
 		
@@ -79,6 +79,7 @@ public class PanelSponsor extends JPanel{
 				fila[2] = sponsors.get(i).getRazonSocial();
 				fila[3] = sponsors.get(i).getCalle();
 				fila[4] = sponsors.get(i).getNumero();
+				fila[5] = sponsors.get(i).getComentario();
 				tableModel.addRow(fila);
 				}
 			tableSponsors.setModel(tableModel);
@@ -87,6 +88,7 @@ public class PanelSponsor extends JPanel{
 			tableSponsors.getColumnModel().getColumn(2).setPreferredWidth(150);
 			tableSponsors.getColumnModel().getColumn(3).setPreferredWidth(200);
 			tableSponsors.getColumnModel().getColumn(4).setPreferredWidth(70);
+			tableSponsors.getColumnModel().getColumn(5).setPreferredWidth(200);
 			//Oculto columna de IdPersonaje
             tableSponsors.getColumnModel().getColumn(0).setMaxWidth(0);
             tableSponsors.getColumnModel().getColumn(0).setMinWidth(0);
@@ -107,7 +109,8 @@ public class PanelSponsor extends JPanel{
 		String cuit = String.valueOf(tableSponsors.getValueAt(tableSponsors.getSelectedRow(), 1));
 		String calle = String.valueOf(tableSponsors.getValueAt(tableSponsors.getSelectedRow(), 3));
 		String numero = String.valueOf(tableSponsors.getValueAt(tableSponsors.getSelectedRow(), 4));
-		Sponsor s = new Sponsor(id, razonSocial, cuit, calle, numero);
+		String comentario = String.valueOf(tableSponsors.getValueAt(tableSponsors.getSelectedRow(), 5));
+		Sponsor s = new Sponsor(id, razonSocial, cuit, calle, numero, comentario);
 		return s;
 	}
 	
