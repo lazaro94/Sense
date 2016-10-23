@@ -208,4 +208,52 @@ public class DataSponsor {
 		}
 		return s;
 	}
+	
+	public Sponsor getById(Sponsor s) throws Exception{
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String query = "SELECT Cuit, RazonSocial, Direccion, Numero, Comentario FROM sponsors WHERE idSponsors=?";
+		try{
+			stmt=FactoryConnection.getInstancia().getConn().prepareStatement(query);
+			stmt.setInt(1, s.getId());
+			rs=stmt.executeQuery();
+			if (rs.next()){
+				s.setCalle(rs.getString("Direccion"));
+				s.setNumero(rs.getString("Numero"));
+				s.setComentario(rs.getString("Comentario"));
+				s.setCuit(rs.getString("Cuit"));
+				s.setRazonSocial(rs.getString("RazonSocial"));
+			}
+			else{
+				throw new AppException("Sponsor no encontrado");
+			}
+		}
+		catch(AppException appex){
+				throw appex;
+			}
+		catch(SQLException sqlex){
+			throw new SQLException("Error al consultar la tabla Sponsors");
+		}
+		catch(Exception ex){
+			throw new Exception("Error no controlado al consultar la tabla Sponsors");
+		}
+		finally{
+			try{
+				if(stmt!=null){
+					stmt.close();
+				}
+				if(rs!=null){
+					rs.close();
+				}
+				FactoryConnection.getInstancia().releaseConn();
+			}
+			catch(SQLException sqlex){
+				throw new SQLException("Error la intentar cerrar la conexion");
+			}
+			catch(Exception ex){
+				throw new Exception ("Error no controlado al intentar cerrar las conexiones");
+			}
+		}
+		return s;
+	}
 }

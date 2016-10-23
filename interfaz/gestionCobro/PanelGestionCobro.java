@@ -8,8 +8,11 @@ import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class PanelGestionCobro extends JPanel {
+	private JPanel panelCentral;
 
 	/**
 	 * Create the panel.
@@ -31,9 +34,25 @@ public class PanelGestionCobro extends JPanel {
 		panelMenu.add(label_1);
 		
 		JButton btnRegistrarPago = new JButton("Registrar Pago");
+		btnRegistrarPago.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				registrarPago();
+			}
+		});
 		panelMenu.add(btnRegistrarPago);
 		
+		panelCentral = new JPanel();
+		add(panelCentral, BorderLayout.CENTER);
+		
 
+	}
+	
+	private void registrarPago(){
+		RegistrarCobro rc = new RegistrarCobro();
+		panelCentral.removeAll();
+		panelCentral.add(rc);
+		panelCentral.revalidate();
+		panelCentral.repaint();
 	}
 
 }
