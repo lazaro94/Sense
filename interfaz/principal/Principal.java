@@ -50,7 +50,7 @@ public class Principal {
 	private void initialize() {
 		frmSenseFilms = new JFrame();
 		frmSenseFilms.setTitle("Sense Films");
-		frmSenseFilms.setBounds(100, 100, 900, 700);
+		frmSenseFilms.setBounds(100, 100, 1020, 740);
 		frmSenseFilms.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmSenseFilms.getContentPane().setLayout(new BorderLayout(0, 0));
 		
