@@ -52,13 +52,13 @@ public class DataContacto {
 		ArrayList<Contacto> contactos = new ArrayList<Contacto>();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String query = "SELECT Nombre, Apellido, Direccion, Mail, Telefono1, Telefono2, DNI, Cargo FROM contactos WHERE IdSponsor=?;";
+		String query = "SELECT IdContacto, Nombre, Apellido, Direccion, Mail, Telefono1, Telefono2, DNI, Cargo FROM contactos WHERE IdSponsor=?;";
 		try{
 			stmt = FactoryConnection.getInstancia().getConn().prepareStatement(query);
 			stmt.setInt(1, s.getId());
 			rs = stmt.executeQuery();
 			while (rs.next()){
-				Contacto c = new Contacto(rs.getString("Nombre"), rs.getString("Apellido"), rs.getString("Telefono1"), rs.getString("Telefono2"), rs.getString("DNI"), rs.getString("Mail"), rs.getString("Cargo"), rs.getString("Direccion"));
+				Contacto c = new Contacto(rs.getInt("IdContacto"), rs.getString("Nombre"), rs.getString("Apellido"), rs.getString("Telefono1"), rs.getString("Telefono2"), rs.getString("DNI"), rs.getString("Mail"), rs.getString("Cargo"), rs.getString("Direccion"));
 				contactos.add(c);
 			}
 		}

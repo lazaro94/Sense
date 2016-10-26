@@ -2,6 +2,7 @@ package entidades;
 
 public class Contacto {
 
+	private int idContacto;
 	private String nombre;
 	private String apellido;
 	private String telefono1;
@@ -14,7 +15,8 @@ public class Contacto {
 	public Contacto(){
 		
 	}
-	public Contacto(String nombre, String apellido, String telefono1, String telefono2, String dni, String mail, String cargo, String direccion){
+	public Contacto(int idContacto, String nombre, String apellido, String telefono1, String telefono2, String dni, String mail, String cargo, String direccion){
+		this.idContacto = idContacto;
 		this.apellido = apellido;
 		this.cargo = cargo;
 		this.direccion = direccion;
@@ -23,6 +25,13 @@ public class Contacto {
 		this.nombre = nombre;
 		this.telefono1 = telefono1;
 		this.telefono2 = telefono2;
+	}
+	
+	public int getIdContacto() {
+		return idContacto;
+	}
+	public void setIdContacto(int idContacto) {
+		this.idContacto = idContacto;
 	}
 	public String getNombre() {
 		return nombre;

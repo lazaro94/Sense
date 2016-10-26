@@ -67,6 +67,9 @@ public class Principal {
 				clickSponsors();
 			}
 		});
+		
+		JLabel lblAdministracion = new JLabel(" Administracion");
+		panelizq.add(lblAdministracion);
 		panelizq.add(btnSponsors);
 		
 		JLabel label_1 = new JLabel("  ");
@@ -78,6 +81,12 @@ public class Principal {
 				clickPublicidades();
 			}
 		});
+		
+		JButton btnContactos = new JButton("Contactos");
+		panelizq.add(btnContactos);
+		
+		JLabel label_3 = new JLabel(" ");
+		panelizq.add(label_3);
 		panelizq.add(btnContratos);
 		
 		JLabel label_2 = new JLabel("  ");
@@ -89,6 +98,9 @@ public class Principal {
 				gestionCobros();
 			}
 		});
+		
+		JLabel lblGestiones = new JLabel(" Gestiones");
+		panelizq.add(lblGestiones);
 		panelizq.add(btnGestionCobros);
 		
 		panelCentral = new JPanel();

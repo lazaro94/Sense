@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.awt.BorderLayout;
 import javax.swing.table.DefaultTableModel;
 
+import contacto.EditContacto;
 import logica.LogicSponsors;
 import entidades.Sponsor;
 import javax.swing.JLabel;
@@ -15,6 +16,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Component;
 
 public class PanelSponsor extends JPanel{
 	private JTable tableSponsors;
@@ -58,6 +60,21 @@ public class PanelSponsor extends JPanel{
 			}
 		});
 		panel.add(btnEliminar);
+		
+		JLabel label_2 = new JLabel("        ");
+		panel.add(label_2);
+		
+		JButton btnVerContactos = new JButton("Ver contactos");
+		btnVerContactos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				verContactos();
+			}
+		});
+		btnVerContactos.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		panel.add(btnVerContactos);
+		
+		JLabel lblSponsors = new JLabel("SPONSORS");
+		add(lblSponsors, BorderLayout.NORTH);
 		actualizarTabla();
 	}
 	
@@ -172,5 +189,10 @@ public class PanelSponsor extends JPanel{
 		catch(Exception ex){
 			informarError(ex.getMessage(), "Eliminar Sponsor");
 		}
+	}
+	
+	private void verContactos(){
+		EditContacto et = new EditContacto();
+		et.open(mapearDeTabla());
 	}
 }
