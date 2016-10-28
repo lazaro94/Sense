@@ -39,7 +39,7 @@ public class EditContacto {
 	private void initialize() {
 		frameContactos = new JFrame();
 		frameContactos.setBounds(100, 100, 553, 384);
-		frameContactos.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frameContactos.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frameContactos.getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		tableContactos = new JTable();

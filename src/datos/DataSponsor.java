@@ -101,7 +101,7 @@ public class DataSponsor {
 	
 	public void insert(Sponsor s) throws Exception{
 		PreparedStatement stmt = null;
-		String query = "INSERT INTO sponsors (Cuit, RazonSocial, Direccion, Numero, Comentario) VALUES (?, ?, ?, ?)";
+		String query = "INSERT INTO sponsors (Cuit, RazonSocial, Direccion, Numero, Comentario) VALUES (?, ?, ?, ?, ?)";
 		try{
 			stmt=FactoryConnection.getInstancia().getConn().prepareStatement(query);
 			stmt.setString(1, s.getCuit());

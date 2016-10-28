@@ -4,24 +4,14 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
 
 import entidades.Contrato;
 import entidades.Sponsor;
 import logica.LogicContrato;
 
-import com.jgoodies.forms.layout.FormSpecs;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.CardLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import javax.swing.SpringLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
