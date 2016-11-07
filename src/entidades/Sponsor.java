@@ -1,5 +1,7 @@
 package entidades;
 
+import java.util.ArrayList;
+
 public class Sponsor {
 	
 	private String razonSocial;
@@ -8,6 +10,8 @@ public class Sponsor {
 	private String numero;
 	private String comentario;
 	private int id;
+	private ArrayList<Contacto> contactos;
+	private ArrayList<Contrato> contratos;
 	
 	//Constructores
 	
@@ -18,13 +22,29 @@ public class Sponsor {
 		this.cuit=cuit;
 		this.numero=numero;
 		this.comentario=comentario;
+		contactos = new ArrayList<Contacto>();
+		contratos = new ArrayList<Contrato>();
 	}
 	
 	public Sponsor(){
+		contactos = new ArrayList<Contacto>();
+		contratos = new ArrayList<Contrato>();
 		
 	}
 	
 	//GETTERS Y SETTERS
+	public ArrayList<Contacto> getContactos(){
+		return contactos;
+	}
+	public void setContactos(ArrayList<Contacto> contactos){
+		this.contactos = contactos;
+	}
+	public void setContratos(ArrayList<Contrato> contratos){
+		this.contratos = contratos;
+	}
+	public ArrayList<Contrato> getContratos(){
+		return contratos;
+	}
 	public String getComentario(){
 		return comentario;
 	}

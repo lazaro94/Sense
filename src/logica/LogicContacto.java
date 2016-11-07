@@ -24,7 +24,7 @@ public class LogicContacto {
 		}
 	}
 	
-	public ArrayList<Contacto> getContactos(Sponsor s) throws Exception{
+	/*public ArrayList<Contacto> getContactos(Sponsor s) throws Exception{
 		dc = new DataContacto();
 		ArrayList<Contacto> contactos = new ArrayList<Contacto>();
 		
@@ -38,5 +38,5 @@ public class LogicContacto {
 			throw ex;
 		}
 		return contactos;
-	}
+	}*/
 }

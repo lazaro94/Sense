@@ -11,9 +11,10 @@ public class Contacto {
 	private String mail;
 	private String cargo;
 	private String direccion;
+	private Sponsor sponsor;
 	
 	public Contacto(){
-		
+		sponsor = new Sponsor();
 	}
 	public Contacto(int idContacto, String nombre, String apellido, String telefono1, String telefono2, String dni, String mail, String cargo, String direccion){
 		this.idContacto = idContacto;
@@ -25,8 +26,18 @@ public class Contacto {
 		this.nombre = nombre;
 		this.telefono1 = telefono1;
 		this.telefono2 = telefono2;
+		sponsor = new Sponsor();
 	}
 	
+	public Sponsor getSponsor() {
+		return sponsor;
+	}
+	public void setSponsor(Sponsor sponsor) {
+		this.sponsor = sponsor;
+	}
+	public void setTelefono1(String telefono1) {
+		this.telefono1 = telefono1;
+	}
 	public int getIdContacto() {
 		return idContacto;
 	}

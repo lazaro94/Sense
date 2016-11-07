@@ -47,41 +47,4 @@ public class DataContacto {
 			}
 		}
 	}
-	
-	public ArrayList<Contacto> contactos(Sponsor s) throws Exception{
-		ArrayList<Contacto> contactos = new ArrayList<Contacto>();
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		String query = "SELECT IdContacto, Nombre, Apellido, Direccion, Mail, Telefono1, Telefono2, DNI, Cargo FROM contactos WHERE IdSponsor=?;";
-		try{
-			stmt = FactoryConnection.getInstancia().getConn().prepareStatement(query);
-			stmt.setInt(1, s.getId());
-			rs = stmt.executeQuery();
-			while (rs.next()){
-				Contacto c = new Contacto(rs.getInt("IdContacto"), rs.getString("Nombre"), rs.getString("Apellido"), rs.getString("Telefono1"), rs.getString("Telefono2"), rs.getString("DNI"), rs.getString("Mail"), rs.getString("Cargo"), rs.getString("Direccion"));
-				contactos.add(c);
-			}
-		}
-		catch(SQLException sqlex){
-			throw new SQLException("Error al consultar la tabla contactos");
-		}
-		catch(Exception ex){
-			throw new Exception("Error no controlado al intentar consultar los contactos");
-		}
-		finally{
-			try{
-				if(stmt!=null){
-					stmt.close();
-				}
-				FactoryConnection.getInstancia().releaseConn();
-			}
-			catch(SQLException sqlex){
-				throw new SQLException("Error la intentar cerrar la conexion");
-			}
-			catch(Exception ex){
-				throw new Exception ("Error no controlado al intentar cerrar las conexiones");
-			}			
-		}
-		return contactos;
-	}
 }

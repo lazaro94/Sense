@@ -63,7 +63,7 @@ public class EditSponsor {
 			}
 		});
 		frmEdit.setBounds(100, 100, 450, 300);
-		frmEdit.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmEdit.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmEdit.getContentPane().setLayout(null);
 		
 		lblId = new JLabel("Id");

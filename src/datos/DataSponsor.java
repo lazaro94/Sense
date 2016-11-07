@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import entidades.Contacto;
 import entidades.Sponsor;
 import util.AppException;
 
@@ -34,6 +35,9 @@ public class DataSponsor {
 			while (rs.next()){
 				Sponsor s = new Sponsor(rs.getInt("IdSponsors"),rs.getString("RazonSocial"), rs.getString("Cuit"), rs.getString("Direccion"), rs.getString("Numero"), rs.getString("Comentario"));
 				sponsors.add(s);
+			}
+			for(Sponsor s : sponsors){
+				s.setContactos(getContactos(s));
 			}
 		}
 		catch(SQLException sqlex){
@@ -178,6 +182,7 @@ public class DataSponsor {
 			else{
 				throw new AppException("Sponsor no encontrado");
 			}
+			s.setContactos(getContactos(s));
 		}
 		catch(AppException appex){
 				throw appex;
@@ -226,6 +231,7 @@ public class DataSponsor {
 			else{
 				throw new AppException("Sponsor no encontrado");
 			}
+			s.setContactos(getContactos(s));
 		}
 		catch(AppException appex){
 				throw appex;
@@ -254,5 +260,46 @@ public class DataSponsor {
 			}
 		}
 		return s;
+	}
+	
+	public ArrayList<Contacto> getContactos(Sponsor s) throws Exception {
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		String sql = "SELECT IdContacto, Nombre, Apellido, Direccion, Mail, Telefono1, Telefono2, DNI, Cargo FROM contactos WHERE IdSponsor=?;";
+		ArrayList<Contacto> contactos;
+		try{
+			stmt = FactoryConnection.getInstancia().getConn().prepareStatement(sql);
+			stmt.setInt(1, s.getId());
+			rs = stmt.executeQuery();
+			contactos = new ArrayList<Contacto>();
+			while (rs.next()){
+				Contacto c = new Contacto(rs.getInt("IdContacto"), rs.getString("Nombre"), rs.getString("Apellido"), rs.getString("Telefono1"), rs.getString("Telefono2"), rs.getString("DNI"), rs.getString("Mail"), rs.getString("Cargo"), rs.getString("Direccion"));
+				contactos.add(c);
+			}
+		}
+		catch(SQLException sqlex){
+			throw new SQLException("Error al consultar la tabla contactos");
+		}
+		catch(Exception ex){
+			throw new Exception("Error no controlado al intentar consultar los contactos");
+		}
+		finally{
+			try{
+				if(stmt!=null){
+					stmt.close();
+				}
+				if(rs!=null){
+					rs.close();
+				}
+				FactoryConnection.getInstancia().releaseConn();
+			}
+			catch(SQLException sqlex){
+				throw new SQLException("Error la intentar cerrar la conexion");
+			}
+			catch(Exception ex){
+				throw new Exception ("Error no controlado al intentar cerrar las conexiones");
+			}			
+		}
+		return contactos;
 	}
 }

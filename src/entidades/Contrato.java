@@ -12,9 +12,10 @@ public class Contrato {
 	private String codigo;
 	private int id;
 	private int idSponsor;
+	private Sponsor sponsor;
 	
 	public Contrato(){
-		
+		sponsor = new Sponsor();
 	}
 	
 	public Contrato(Date fechaInicio, Date fechaFin, int diaPago, Float monto, String comentario, String codigo, int id, int idSponsor){
@@ -26,6 +27,7 @@ public class Contrato {
 		this.id = id;
 		this.idSponsor = idSponsor;
 		this.monto = monto;
+		sponsor = new Sponsor();
 	}
 	
 	@Override

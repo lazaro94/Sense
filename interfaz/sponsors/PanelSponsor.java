@@ -139,7 +139,7 @@ public class PanelSponsor extends JPanel{
 	}
 	
 	private boolean validarSeleccion(){
-		if(tableSponsors.getSelectedRow()<=0){
+		if(tableSponsors.getSelectedRow()<0){
 			informarError("Por favor, seleccione un sponsor", "Modificar sponsors");
 			return false;
 		}

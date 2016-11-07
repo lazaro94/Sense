@@ -23,8 +23,6 @@ public class EditContacto {
 	private JTable tableContactos;
 	
 	private Sponsor sponsorAct = null;
-	private LogicContacto lc = null;
-	private ArrayList<Contacto> contactos = new ArrayList<Contacto>();
 
 	/**
 	 * Create the application.
@@ -48,23 +46,8 @@ public class EditContacto {
 	
 	public void open(Sponsor s){
 		sponsorAct = s;
-		loadContactos();
 		frameContactos.setVisible(true);
-	}
-	
-	private void loadContactos(){
-		lc = new LogicContacto();
-		
-		try{
-			contactos=lc.getContactos(sponsorAct);
-			loadTable();
-		}
-		catch(SQLException sqlex){
-			informarError(sqlex.getMessage());
-		}
-		catch(Exception ex){
-			informarError(ex.getMessage());
-		}
+		loadTable();
 	}
 	
 	private void loadTable(){
@@ -75,14 +58,14 @@ public class EditContacto {
 		try{
 			tableModel.setColumnIdentifiers(columnas);
 			Object[] fila = new Object[tableModel.getColumnCount()];
-			for (int i = 0; i < contactos.size(); i++) {
+			for (int i = 0; i < sponsorAct.getContactos().size(); i++) {
 
-				fila[0] = contactos.get(i).getIdContacto();
-				fila[1] = contactos.get(i).getNombre();
-				fila[2] = contactos.get(i).getApellido();
-				fila[3] = contactos.get(i).getDireccion();
-				fila[4] = contactos.get(i).getCargo();
-				fila[5] = contactos.get(i).getDni();
+				fila[0] = sponsorAct.getContactos().get(i).getIdContacto();
+				fila[1] = sponsorAct.getContactos().get(i).getNombre();
+				fila[2] = sponsorAct.getContactos().get(i).getApellido();
+				fila[3] = sponsorAct.getContactos().get(i).getDireccion();
+				fila[4] = sponsorAct.getContactos().get(i).getCargo();
+				fila[5] = sponsorAct.getContactos().get(i).getDni();
 				tableModel.addRow(fila);
 				}
 			tableContactos.setModel(tableModel);
