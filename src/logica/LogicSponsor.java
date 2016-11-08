@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import datos.DataSponsor;
 import entidades.Sponsor;
 
-public class LogicSponsors {
+public class LogicSponsor {
 	
 	DataSponsor ds = null;
 	

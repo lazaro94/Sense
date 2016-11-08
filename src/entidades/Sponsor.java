@@ -31,6 +31,11 @@ public class Sponsor {
 		contratos = new ArrayList<Contrato>();
 		
 	}
+	public Sponsor(int id){
+		this.id=id;
+		contactos = new ArrayList<Contacto>();
+		contratos = new ArrayList<Contrato>();
+	}
 	
 	//GETTERS Y SETTERS
 	public ArrayList<Contacto> getContactos(){
@@ -86,6 +91,11 @@ public class Sponsor {
 	@Override
 	public String toString(){
 		return this.getRazonSocial();
+	}
+	
+	@Override
+	public boolean equals(Object obj){
+		return obj instanceof Sponsor && ((Sponsor)obj).getId() == this.getId(); 
 	}
 	
 }

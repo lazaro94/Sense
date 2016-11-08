@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 
 import contratos.PanelContrato;
 import gestionCobro.PanelGestionCobro;
+import sponsors.ViewSponsor;
 import sponsors.PanelSponsor;
 
 import javax.swing.BoxLayout;
@@ -81,12 +82,6 @@ public class Principal {
 				clickPublicidades();
 			}
 		});
-		
-		JButton btnContactos = new JButton("Contactos");
-		panelizq.add(btnContactos);
-		
-		JLabel label_3 = new JLabel(" ");
-		panelizq.add(label_3);
 		panelizq.add(btnContratos);
 		
 		JLabel label_2 = new JLabel("  ");

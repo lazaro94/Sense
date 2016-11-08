@@ -5,7 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 
 import entidades.Sponsor;
-import logica.LogicSponsors;
+import logica.LogicSponsor;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -26,7 +26,7 @@ public class EditSponsor {
 	private JTextField txtNumero;
 	private JLabel lblId;
 	
-	private LogicSponsors ls = null;
+	private LogicSponsor ls = null;
 	private JTextField txtComentario;
 
 	/**
@@ -161,9 +161,9 @@ public class EditSponsor {
 	private void clickGuardar(){
 		Sponsor s = new Sponsor();
 		s=mapearDeFormulario();
-		PanelSponsor abm = new PanelSponsor();
+		ViewSponsor abm = new ViewSponsor();
 		try{
-			ls = new LogicSponsors();
+			ls = new LogicSponsor();
 			if(s.getId()>0){
 				ls.updateSponsor(s);
 				informarUsuario("Sponsor actualizado correctamente", "Modificar Sponsors");

@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
 
 import entidades.Sponsor;
 import logica.LogicContrato;
-import logica.LogicSponsors;
+import logica.LogicSponsor;
 import util.AppException;
 import util.Validate;
 
@@ -188,7 +188,7 @@ public class PanelContrato extends JPanel {
 
 	private void llenarCombo(){
 		ArrayList<Sponsor> sponsors = new ArrayList<Sponsor>();
-		LogicSponsors ls = new LogicSponsors();
+		LogicSponsor ls = new LogicSponsor();
 		try{
 			sponsors = ls.getSponsors();
 			for (int i=0; i<sponsors.size(); i++){
