@@ -3,6 +3,7 @@ package datos;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+
 import entidades.Contacto;
 
 public class DataContacto {
@@ -10,6 +11,7 @@ public class DataContacto {
 	public void insert(Contacto c) throws Exception{		
 		PreparedStatement stmt = null;
 		String query = "INSERT INTO contactos (Nombre, Apellido, Direccion, Mail, Telefono1, Telefono2, DNI, Cargo, IdSponsor) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);";
+		
 		try{
 			stmt = FactoryConnection.getInstancia().getConn().prepareStatement(query);
 			stmt.setString(1, c.getNombre());
@@ -20,7 +22,7 @@ public class DataContacto {
 			stmt.setString(6, c.getTelefono2());
 			stmt.setString(7, c.getDni());
 			stmt.setString(8, c.getCargo());
-			stmt.setInt(8, c.getSponsor().getId());
+			stmt.setInt(9, c.getSponsor().getId());
 			stmt.execute();
 		}
 		catch(SQLException sqlex){

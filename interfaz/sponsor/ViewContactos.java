@@ -148,7 +148,8 @@ public class ViewContactos extends JPanel {
 	private void nuevo(){
 		Contacto c = new Contacto();
 		c.setSponsor(s);
-		
+		EditContacto ec = new EditContacto();
+		ec.open(c);
 	}
 	
 	

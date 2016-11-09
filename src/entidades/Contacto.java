@@ -59,9 +59,6 @@ public class Contacto {
 	public String getTelefono1() {
 		return telefono1;
 	}
-	public void setTelefono(String telefono1) {
-		this.telefono1 = telefono1;
-	}
 	public String getMail() {
 		return mail;
 	}
