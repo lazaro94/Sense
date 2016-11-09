@@ -1,4 +1,4 @@
-package sponsors;
+package sponsor;
 
 import java.util.ArrayList;
 

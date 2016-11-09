@@ -1,4 +1,4 @@
-package sponsors;
+package sponsor;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;

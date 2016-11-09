@@ -1,20 +1,18 @@
 package logica;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import datos.DataContacto;
 import entidades.Contacto;
-import entidades.Sponsor;
 
 public class LogicContacto {
 
 	private DataContacto dc = null;
 	
-	public void insertContacto(Contacto c, Sponsor s) throws Exception{
+	public void insertContacto(Contacto c) throws Exception{
 		dc = new DataContacto();
 		try{
-			dc.insert(c, s);
+			dc.insert(c);
 		}
 		catch (SQLException sqlex){
 			throw sqlex;
@@ -24,19 +22,13 @@ public class LogicContacto {
 		}
 	}
 	
-	/*public ArrayList<Contacto> getContactos(Sponsor s) throws Exception{
+	public void updateContacto(Contacto c) throws Exception{
 		dc = new DataContacto();
-		ArrayList<Contacto> contactos = new ArrayList<Contacto>();
-		
 		try{
-			contactos=dc.contactos(s);
+			dc.update(c);
 		}
-		catch (SQLException sqlex){
-			throw sqlex;
-		}
-		catch (Exception ex){
+		catch(Exception ex){
 			throw ex;
 		}
-		return contactos;
-	}*/
+	}
 }

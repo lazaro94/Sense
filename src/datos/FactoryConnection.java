@@ -11,8 +11,8 @@ public class FactoryConnection {
 	private String dbDriver="com.mysql.jdbc.Driver";
 	private String host="rosariocdr.ddns.net";
 	private String port="3306";
-	private String user="remoteadm";
-	private String pass="Remote123";
+	private String user="sense";
+	private String pass="SenseFilms";
 	private String db="sense";
 	private String dbType="mysql";
 	

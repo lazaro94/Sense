@@ -1,4 +1,4 @@
-package sponsors;
+package sponsor;
 
 import javax.swing.JPanel;
 
@@ -74,7 +74,7 @@ public class PanelSponsor extends JPanel{
 		});
 		panelButtons.add(btnContactos);
 				
-		this.add(vc);
+		//this.add(vc);
 		
 		this.revalidate();
 		this.repaint();
@@ -98,7 +98,9 @@ public class PanelSponsor extends JPanel{
 			s=vs.getSponsor();
 			vc.show(s);
 			this.add(vc);
-		}
+			this.revalidate();
+			this.repaint();
+			}
 		catch(Exception ex){
 			informarError(ex.getMessage(), "Ver Contactos");
 		}

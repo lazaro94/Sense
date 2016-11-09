@@ -8,8 +8,8 @@ import javax.swing.JPanel;
 
 import contratos.PanelContrato;
 import gestionCobro.PanelGestionCobro;
-import sponsors.ViewSponsor;
-import sponsors.PanelSponsor;
+import sponsor.PanelSponsor;
+import sponsor.ViewSponsor;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -76,28 +76,16 @@ public class Principal {
 		JLabel label_1 = new JLabel("  ");
 		panelizq.add(label_1);
 		
-		JButton btnContratos = new JButton("Contratos");
-		btnContratos.addActionListener(new ActionListener() {
+		JButton btnPublicidades = new JButton("Publicidades");
+		btnPublicidades.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				clickPublicidades();
-			}
-		});
-		panelizq.add(btnContratos);
-		
-		JLabel label_2 = new JLabel("  ");
-		panelizq.add(label_2);
-		
-		JButton btnGestionCobros = new JButton("Gestion Cobros");
-		btnGestionCobros.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				gestionCobros();
 			}
 		});
 		
 		JLabel lblGestiones = new JLabel(" Gestiones");
 		panelizq.add(lblGestiones);
-		panelizq.add(btnGestionCobros);
-		
+		panelizq.add(btnPublicidades);
 		panelCentral = new JPanel();
 		frmSenseFilms.getContentPane().add(panelCentral, BorderLayout.CENTER);
 	
@@ -110,20 +98,8 @@ public class Principal {
 		panelCentral.revalidate();
 		panelCentral.repaint();
 	}
-	
 	private void clickPublicidades(){
-		PanelContrato publicidades = new PanelContrato();
-		panelCentral.removeAll();
-		panelCentral.add(publicidades);
-		panelCentral.revalidate();
-		panelCentral.repaint();
-	}
-	private void gestionCobros(){
-		PanelGestionCobro gc = new PanelGestionCobro();
-		panelCentral.removeAll();
-		panelCentral.add(gc);
-		panelCentral.revalidate();
-		panelCentral.repaint();
+		
 	}
 
 }

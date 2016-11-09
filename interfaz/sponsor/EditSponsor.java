@@ -1,10 +1,9 @@
-package sponsors;
-
-import java.awt.EventQueue;
+package sponsor;
 
 import javax.swing.JFrame;
 
 import entidades.Sponsor;
+import generic.GenericABM;
 import logica.LogicSponsor;
 
 import javax.swing.JLabel;
@@ -17,7 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class EditSponsor {
+public class EditSponsor extends GenericABM {
 
 	private JFrame frmEdit;
 	private JTextField txtRazonSocial;
@@ -30,25 +29,9 @@ public class EditSponsor {
 	private JTextField txtComentario;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					EditSponsor window = new EditSponsor();
-					window.frmEdit.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the application.
 	 */
-	public EditSponsor() {
+	public EditSponsor(){
 		initialize();
 	}
 
@@ -135,11 +118,11 @@ public class EditSponsor {
 		txtComentario.setColumns(10);
 	}
 	
-	public void open(Sponsor s){
+	protected void open(Sponsor s){
 		mapearAFormulario(s);
 		frmEdit.setVisible(true);		
 	}
-
+	
 	private void mapearAFormulario(Sponsor s){
 		lblId.setText(Integer.toString(s.getId()));
 		txtCuit.setText(s.getCuit());
@@ -149,16 +132,19 @@ public class EditSponsor {
 		txtComentario.setText(s.getComentario());
 	}
 	
-	private Sponsor mapearDeFormulario(){
+	@Override
+	protected Sponsor mapearDeFormulario(){
 		 Sponsor s = new Sponsor(Integer.parseInt(lblId.getText()), txtRazonSocial.getText(), txtCuit.getText(), txtCalle.getText(), txtNumero.getText(), txtComentario.getText());
 		 return s;
 	}
 	
-	private void clickCancelar(){
+	@Override
+	protected void clickCancelar(){
 		frmEdit.dispose();
 	}
 	
-	private void clickGuardar(){
+	@Override
+	protected void clickGuardar(){
 		Sponsor s = new Sponsor();
 		s=mapearDeFormulario();
 		ViewSponsor abm = new ViewSponsor();
@@ -183,10 +169,10 @@ public class EditSponsor {
 		}
 	}
 	
-	private void informarError(String mensaje, String titulo){
+	protected void informarError(String mensaje, String titulo){
 		JOptionPane.showMessageDialog(frmEdit, mensaje, titulo, JOptionPane.ERROR_MESSAGE);
 	}
-	private void informarUsuario(String mensaje, String titulo){
+	protected void informarUsuario(String mensaje, String titulo){
 		JOptionPane.showMessageDialog(frmEdit, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
 	}
 }
