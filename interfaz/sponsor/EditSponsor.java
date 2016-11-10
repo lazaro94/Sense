@@ -7,7 +7,6 @@ import generic.GenericABM;
 import logica.LogicSponsor;
 
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -152,27 +151,20 @@ public class EditSponsor extends GenericABM {
 			ls = new LogicSponsor();
 			if(s.getId()>0){
 				ls.updateSponsor(s);
-				informarUsuario("Sponsor actualizado correctamente", "Modificar Sponsors");
+				super.informarUsuario("Sponsor actualizado correctamente", "Modificar Sponsors");
 			}
 			else {
 				ls.InsertSponsor(s);
-				informarUsuario("Sponsor ingresado correctamente", "Modificar Sponsors");
+				super.informarUsuario("Sponsor ingresado correctamente", "Modificar Sponsors");
 			}
 			abm.actualizarTabla();
 			frmEdit.dispose();
 		}
 		catch(SQLException sqlex){
-			informarError(sqlex.getMessage(), "Modificar sponsors");
+			super.informarError(sqlex.getMessage(), "Modificar sponsors");
 		}
 		catch(Exception ex){
-			informarError(ex.getMessage(), "Modificar sponsors");			
+			super.informarError(ex.getMessage(), "Modificar sponsors");			
 		}
-	}
-	
-	protected void informarError(String mensaje, String titulo){
-		JOptionPane.showMessageDialog(frmEdit, mensaje, titulo, JOptionPane.ERROR_MESSAGE);
-	}
-	protected void informarUsuario(String mensaje, String titulo){
-		JOptionPane.showMessageDialog(frmEdit, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
 	}
 }

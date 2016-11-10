@@ -36,9 +36,13 @@ public class LogicContrato {
 	
 	public ArrayList<Contrato> getContratos() throws Exception{
 		dc = new DataContrato();
+		ds = new DataSponsor();
 		ArrayList<Contrato> contratos = new ArrayList<Contrato>();
 		try{
 			contratos=dc.contratos();
+			for(Contrato c : contratos){
+				c.setSponsor(ds.getById(c.getSponsor())); //Le paso el sponsor que tiene solo seteado id
+			}
 		}
 		catch(SQLException sqlex){
 			throw sqlex;

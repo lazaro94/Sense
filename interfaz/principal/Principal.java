@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 
 import contratos.PanelContrato;
 import gestionCobro.PanelGestionCobro;
+import publicidad.Publicidades;
 import sponsor.PanelSponsor;
 import sponsor.ViewSponsor;
 
@@ -99,7 +100,11 @@ public class Principal {
 		panelCentral.repaint();
 	}
 	private void clickPublicidades(){
-		
+		Publicidades publi = new Publicidades();
+		panelCentral.removeAll();
+		panelCentral.add(publi, BorderLayout.CENTER);
+		panelCentral.revalidate();
+		panelCentral.repaint();
 	}
 
 }

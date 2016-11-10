@@ -14,13 +14,13 @@ public class DataContrato {
 	public ArrayList<Contrato> contratos() throws Exception{
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String query = "SELECT * FROM contratos;";
+		String query = "SELECT FechaInicio, FechaFin, DiaPago, Monto, Comentario, IdContrato, Codigo, IdSponsor FROM contratos;";
 		ArrayList<Contrato> contratos = new ArrayList<Contrato>();
 		try{
 			stmt=FactoryConnection.getInstancia().getConn().prepareStatement(query);
 			rs = stmt.executeQuery();
 			while (rs.next()){
-				Contrato c = new Contrato(rs.getDate("FechaInicio"), rs.getDate("FechaFin"), rs.getInt("DiaPago"), rs.getFloat("Monto"), rs.getString("Comentario"), rs.getString("Codigo"), rs.getInt("IdContrato"), rs.getInt("idSponsor"));
+				Contrato c = new Contrato(rs.getDate("FechaInicio"), rs.getDate("FechaFin"), rs.getInt("DiaPago"), rs.getFloat("Monto"), rs.getString("Comentario"), rs.getString("Codigo"), rs.getInt("IdContrato"), rs.getInt("IdSponsor"));
 				contratos.add(c);
 			}
 		}

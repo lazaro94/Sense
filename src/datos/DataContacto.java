@@ -10,7 +10,7 @@ public class DataContacto {
 
 	public void insert(Contacto c) throws Exception{		
 		PreparedStatement stmt = null;
-		String query = "INSERT INTO contactos (Nombre, Apellido, Direccion, Mail, Telefono1, Telefono2, DNI, Cargo, IdSponsor) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);";
+		String query = "INSERT INTO contactos (Nombre, Apellido, Direccion, Mail, Telefono1, Telefono2, DNI, Cargo, IdSponsor, FechAlta) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, now());";
 		
 		try{
 			stmt = FactoryConnection.getInstancia().getConn().prepareStatement(query);

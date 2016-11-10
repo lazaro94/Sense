@@ -110,7 +110,7 @@ public class RegistrarCobro extends JPanel {
 		try{
 			c.setCodigo(String.valueOf(comboContratos.getSelectedItem()));
 			c = contratos.get(contratos.indexOf(c));
-			s.setId(c.getIdSponsor());
+			//s.setId(c.getIdSponsor());
 			s = lc.getSponsor(s);
 			lblFechaInicio.setText("Fecha inicio: " + String.valueOf(c.getFechaInicio()));
 			lblFechaFin.setText("Fecha fin: " + String.valueOf(c.getFechaFin()));

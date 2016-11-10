@@ -9,7 +9,6 @@ import generic.GenericABM;
 import logica.LogicContacto;
 
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -174,20 +173,14 @@ public class EditContacto extends GenericABM{
 			else {
 				lc.insertContacto(contactoAct);
 			}
-			informarUsuario("Contacto guardado correctamente.", "Editar Contacto");
+			super.informarUsuario("Contacto guardado correctamente.", "Editar Contacto");
 		}
 		catch(SQLException sqlex){
-			informarError(sqlex.getMessage(), "Editar Contacto");
+			super.informarError(sqlex.getMessage(), "Editar Contacto");
 		}
 		catch(Exception ex){
-			informarError(ex.getMessage(), "Editar Contacto");
+			super.informarError(ex.getMessage(), "Editar Contacto");
 		}
-	}
-	protected void informarError(String mensaje, String titulo){
-		JOptionPane.showMessageDialog(frameEditContacto, mensaje, titulo, JOptionPane.ERROR_MESSAGE);
-	}
-	protected void informarUsuario(String mensaje, String titulo){
-		JOptionPane.showMessageDialog(frameEditContacto, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	@Override

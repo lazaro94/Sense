@@ -1,6 +1,7 @@
 package entidades;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class Contrato {
 	
@@ -11,11 +12,12 @@ public class Contrato {
 	private String comentario;
 	private String codigo;
 	private int id;
-	private int idSponsor;
 	private Sponsor sponsor;
+	private ArrayList<Pago> pagos;
 	
 	public Contrato(){
 		sponsor = new Sponsor();
+		pagos = new ArrayList<Pago>();
 	}
 	
 	public Contrato(Date fechaInicio, Date fechaFin, int diaPago, Float monto, String comentario, String codigo, int id, int idSponsor){
@@ -25,9 +27,10 @@ public class Contrato {
 		this.fechaFin = fechaFin;
 		this.fechaInicio = fechaInicio;
 		this.id = id;
-		this.idSponsor = idSponsor;
 		this.monto = monto;
 		sponsor = new Sponsor();
+		sponsor.setId(idSponsor);
+		pagos = new ArrayList<Pago>();
 	}
 	
 	@Override
@@ -82,11 +85,17 @@ public class Contrato {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getIdSponsor() {
-		return idSponsor;
+	public Sponsor getSponsor(){
+		return this.sponsor;
 	}
-	public void setIdSponsor(int idSponsor) {
-		this.idSponsor = idSponsor;
+	public void setSponsor (Sponsor sponsor){
+		this.sponsor=sponsor;
+	}
+	public ArrayList<Pago> getPago(){
+		return this.pagos;
+	}
+	public void setPagos(ArrayList<Pago> pagos){
+		this.pagos=pagos;
 	}
 
 }
