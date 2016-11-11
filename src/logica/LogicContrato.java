@@ -1,12 +1,10 @@
 package logica;
 
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import datos.DataContrato;
 import datos.DataSponsor;
-import entidades.Sponsor;
 import entidades.Contrato;
 
 public class LogicContrato {
@@ -14,13 +12,10 @@ public class LogicContrato {
 	private DataSponsor ds = null;
 	private DataContrato dc = null;
 	
-	public void createPublicidad(Sponsor s, Date fechaInicio, Date fechaFin, int diaPago, Double monto, String codigo) throws Exception{		
-		ds = new DataSponsor();
+	public void createContrato(Contrato c) throws Exception{		
 		dc = new DataContrato();
-		try{
-			s=ds.getIdByRS(s);
-			
-			dc.insertPublicidad(s, fechaInicio, fechaFin, diaPago, monto, codigo);
+		try{			
+			dc.insertContrato(c);
 		}
 		catch(SQLException sqlex){
 			throw sqlex;
@@ -53,10 +48,10 @@ public class LogicContrato {
 		return contratos;
 	}
 	
-	public Sponsor getSponsor(Sponsor s) throws Exception{
-		ds = new DataSponsor();
+	public void updateContrato(Contrato c) throws Exception{
+		dc = new DataContrato();
 		try{
-			s = ds.getById(s);
+			dc.update(c);
 		}
 		catch(SQLException sqlex){
 			throw sqlex;
@@ -64,7 +59,6 @@ public class LogicContrato {
 		catch(Exception ex){
 			throw ex;
 		}
-		return s;
 	}
 
 }

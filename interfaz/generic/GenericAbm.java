@@ -2,7 +2,7 @@ package generic;
 
 import javax.swing.JOptionPane;
 
-public abstract class GenericABM {
+public abstract class GenericAbm {
 	
 	protected void informarError(String mensaje, String titulo){
 		JOptionPane.showMessageDialog(null, mensaje, titulo, JOptionPane.ERROR_MESSAGE);

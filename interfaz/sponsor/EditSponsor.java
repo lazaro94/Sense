@@ -3,7 +3,7 @@ package sponsor;
 import javax.swing.JFrame;
 
 import entidades.Sponsor;
-import generic.GenericABM;
+import generic.GenericAbm;
 import logica.LogicSponsor;
 
 import javax.swing.JLabel;
@@ -15,7 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class EditSponsor extends GenericABM {
+public class EditSponsor extends GenericAbm {
 
 	private JFrame frmEdit;
 	private JTextField txtRazonSocial;

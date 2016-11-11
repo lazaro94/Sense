@@ -10,6 +10,7 @@ public class Contrato {
 	private int diaPago;
 	private Float monto;
 	private String comentario;
+	private String descripcion;
 	private String codigo;
 	private int id;
 	private Sponsor sponsor;
@@ -20,7 +21,7 @@ public class Contrato {
 		pagos = new ArrayList<Pago>();
 	}
 	
-	public Contrato(Date fechaInicio, Date fechaFin, int diaPago, Float monto, String comentario, String codigo, int id, int idSponsor){
+	public Contrato(Date fechaInicio, Date fechaFin, int diaPago, Float monto, String comentario, String codigo, int id, int idSponsor, String descripcion){
 		this.codigo = codigo;
 		this.comentario = comentario;
 		this.diaPago = diaPago;
@@ -28,6 +29,7 @@ public class Contrato {
 		this.fechaInicio = fechaInicio;
 		this.id = id;
 		this.monto = monto;
+		this.descripcion = descripcion;
 		sponsor = new Sponsor();
 		sponsor.setId(idSponsor);
 		pagos = new ArrayList<Pago>();
@@ -72,6 +74,12 @@ public class Contrato {
 	}
 	public void setComentario(String comentario) {
 		this.comentario = comentario;
+	}
+	public String getDescripcion() {
+		return descripcion;
+	}
+	public void setTipo(String descripcion) {
+		this.descripcion = descripcion;
 	}
 	public String getCodigo() {
 		return codigo;

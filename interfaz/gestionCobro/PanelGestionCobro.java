@@ -48,9 +48,9 @@ public class PanelGestionCobro extends JPanel {
 	}
 	
 	private void registrarPago(){
-		RegistrarCobro rc = new RegistrarCobro();
+		//RegistrarCobro rc = new RegistrarCobro();
 		panelCentral.removeAll();
-		panelCentral.add(rc);
+		//panelCentral.add(rc);
 		panelCentral.revalidate();
 		panelCentral.repaint();
 	}

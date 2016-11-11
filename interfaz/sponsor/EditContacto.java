@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import javax.swing.JFrame;
 
 import entidades.Contacto;
-import generic.GenericABM;
+import generic.GenericAbm;
 import logica.LogicContacto;
 
 import javax.swing.JLabel;
@@ -14,7 +14,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class EditContacto extends GenericABM{
+public class EditContacto extends GenericAbm{
 
 	private JFrame frameEditContacto;
 	private LogicContacto lc;

@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 
-import contratos.PanelContrato;
+
 import gestionCobro.PanelGestionCobro;
 import publicidad.Publicidades;
 import sponsor.PanelSponsor;

@@ -7,20 +7,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import entidades.Contrato;
-import entidades.Sponsor;
 
 public class DataContrato {
 	
 	public ArrayList<Contrato> contratos() throws Exception{
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String query = "SELECT FechaInicio, FechaFin, DiaPago, Monto, Comentario, IdContrato, Codigo, IdSponsor FROM contratos;";
+		String query = "SELECT FechaInicio, FechaFin, DiaPago, Monto, Comentario, IdContrato, Codigo, IdSponsor, Descripcion FROM contratos;";
 		ArrayList<Contrato> contratos = new ArrayList<Contrato>();
 		try{
 			stmt=FactoryConnection.getInstancia().getConn().prepareStatement(query);
 			rs = stmt.executeQuery();
 			while (rs.next()){
-				Contrato c = new Contrato(rs.getDate("FechaInicio"), rs.getDate("FechaFin"), rs.getInt("DiaPago"), rs.getFloat("Monto"), rs.getString("Comentario"), rs.getString("Codigo"), rs.getInt("IdContrato"), rs.getInt("IdSponsor"));
+				Contrato c = new Contrato(rs.getDate("FechaInicio"), rs.getDate("FechaFin"), rs.getInt("DiaPago"), rs.getFloat("Monto"), rs.getString("Comentario"), rs.getString("Codigo"), rs.getInt("IdContrato"), rs.getInt("IdSponsor"), rs.getString("Descripcion"));
 				contratos.add(c);
 			}
 		}
@@ -47,17 +46,18 @@ public class DataContrato {
 		return contratos;
 	}
 	
-	public void insertPublicidad(Sponsor s, Date fechaIni, Date fechaFin, int diaPago, Double monto, String codigo) throws Exception{
+	public void insertContrato(Contrato c) throws Exception{
 		PreparedStatement stmt = null;
-		String query = "INSERT INTO contratos (idSponsor, FechaInicio, fechaFin, diaPago, Monto, Codigo) VALUES (?, ?, ?, ?, ?, ?);";
+		String query = "INSERT INTO contratos (idSponsor, FechaInicio, fechaFin, diaPago, Monto, Codigo, Descripcion) VALUES (?, ?, ?, ?, ?, ?, ?);";
 		try{
 			stmt = FactoryConnection.getInstancia().getConn().prepareStatement(query);
-			stmt.setInt(1, s.getId());
-			stmt.setDate(2, fechaIni);
-			stmt.setDate(3, fechaFin);
-			stmt.setInt(4, diaPago);
-			stmt.setDouble(5, monto);
-			stmt.setString(6, codigo);
+			stmt.setInt(1, c.getSponsor().getId());
+			stmt.setDate(2, c.getFechaInicio());
+			stmt.setDate(3, c.getFechaFin());
+			stmt.setInt(4, c.getDiaPago());
+			stmt.setDouble(5, c.getMonto());
+			stmt.setString(6, c.getCodigo());
+			stmt.setString(7, c.getDescripcion());
 			
 			stmt.execute();
 		}
@@ -81,6 +81,30 @@ public class DataContrato {
 				throw new Exception ("Error no controlado al intentar cerrar las conexiones");
 			}
 		}
+	}
+	
+	public void update(Contrato c) throws Exception{
+		PreparedStatement stmt;
+		String query = "UPDATE contratos SET IdSponsor=?, FechaInicio=?, FechaFin=?, DiaPago=?, Monto=?, Comentario=?, Codigo=?, Descripcion=? WHERE IdContrato=?";
+		try{
+			stmt=FactoryConnection.getInstancia().getConn().prepareStatement(query);
+			stmt.setInt(1, c.getSponsor().getId());
+			stmt.setDate(2, c.getFechaInicio());
+			stmt.setDate(3, c.getFechaFin());
+			stmt.setInt(4, c.getDiaPago());
+			stmt.setDouble(5, c.getMonto());
+			stmt.setString(6, c.getComentario());
+			stmt.setString(7, c.getCodigo());
+			stmt.setString(8, c.getDescripcion());
+			stmt.setInt(9, c.getId());
+			stmt.executeUpdate();
+		}
+		catch(SQLException sqlex){
+			throw new SQLException("Error al intentar actualizar la tabla contratos");
+		}
+		catch(Exception ex){
+			throw new Exception("Error no controlado al intentar actualizar el contrato");
+		}		
 	}
 
 }
