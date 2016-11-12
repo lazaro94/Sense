@@ -15,6 +15,8 @@ import javax.swing.JLabel;
 import java.awt.Component;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ViewContratos extends JPanel {
 
@@ -46,6 +48,11 @@ public class ViewContratos extends JPanel {
 		panelButtons.setLayout(new BoxLayout(panelButtons, BoxLayout.X_AXIS));
 		
 		JButton btnNuevo = new JButton("Nuevo");
+		btnNuevo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				nuevo();
+			}
+		});
 		panelButtons.add(btnNuevo);
 		
 		JLabel label_2 = new JLabel("  ");
@@ -86,6 +93,10 @@ public class ViewContratos extends JPanel {
 		loadContratos();
 	}
 	
+	private Contrato mapearDeTabla(){
+		Contrato c = new Contrato();
+		return c;
+	}
 	private void loadContratos(){
 		String[] columnas = {"IdContrato","Codigo","Fecha Inicio","Fecha Fin", "Monto", "Dia Pago", "Sponsor"};
 		lc = new LogicContrato();
@@ -120,9 +131,22 @@ public class ViewContratos extends JPanel {
             tableContratos.getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
 			
 		}
-		catch(Exception ex){
-			
+		catch(Exception ex){			
 		}
+	}
+	
+	private void nuevo(){
+		Contrato c = new Contrato();
+		c.setId(0);
+		EditContrato ec = new EditContrato();
+		ec.open(c);
+	}
+	
+	private void editar(){
+		Contrato c = new Contrato();
+		c.setId(0);
+		EditContrato ec = new EditContrato();
+		ec.open(c);
 	}
 
 }

@@ -78,7 +78,7 @@ public class Contrato {
 	public String getDescripcion() {
 		return descripcion;
 	}
-	public void setTipo(String descripcion) {
+	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
 	public String getCodigo() {
