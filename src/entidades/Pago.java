@@ -8,6 +8,8 @@ public class Pago {
 	private Contrato contrato;
 	private String comprobante;
 	private Date fechaPago;
+	private Date fechaVenc;
+	private Float recargo;
 	
 	public Pago(){
 		sponsor = new Sponsor();
@@ -38,7 +40,18 @@ public class Pago {
 	public void setFechaPago(Date fechaPago) {
 		this.fechaPago = fechaPago;
 	}
-	
-	
+	public Date getFechaVenc() {
+		return fechaVenc;
+	}
+	public void setFechaVenc(Date fechaVenc) {
+		this.fechaVenc = fechaVenc;
+	}
+	public Float getRecargo() {
+		return recargo;
+	}
+
+	public void setRecargo(Float recargo) {
+		this.recargo = recargo;
+	}
 
 }
