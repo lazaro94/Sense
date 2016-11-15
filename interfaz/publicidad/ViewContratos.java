@@ -22,6 +22,7 @@ public class ViewContratos extends JPanel {
 
 	private JTable tableContratos;
 	private LogicContrato lc;
+	private ArrayList<Contrato> contratos = new ArrayList<Contrato>();
 	
 	public ViewContratos() {
 		setLayout(new BorderLayout(0, 0));
@@ -59,6 +60,11 @@ public class ViewContratos extends JPanel {
 		panelButtons.add(label_2);
 		
 		JButton btnModificar = new JButton("Modificar");
+		btnModificar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				editar();
+			}
+		});
 		panelButtons.add(btnModificar);
 		
 		JLabel lblnewlabel = new JLabel("  ");
@@ -93,14 +99,15 @@ public class ViewContratos extends JPanel {
 		loadContratos();
 	}
 	
-	private Contrato mapearDeTabla(){
+	private Contrato mapearDeArray(){		
 		Contrato c = new Contrato();
+		c.setId(Integer.parseInt(tableContratos.getValueAt(tableContratos.getSelectedRow(), 0).toString()));
+		c = contratos.get(contratos.indexOf(c));
 		return c;
 	}
 	private void loadContratos(){
 		String[] columnas = {"IdContrato","Codigo","Fecha Inicio","Fecha Fin", "Monto", "Dia Pago", "Sponsor"};
-		lc = new LogicContrato();
-		ArrayList<Contrato> contratos = new ArrayList<Contrato>();
+		lc = new LogicContrato();		
 		DefaultTableModel tableModel = new DefaultTableModel();
 		
 		try{
@@ -110,8 +117,8 @@ public class ViewContratos extends JPanel {
 			for(Contrato c : contratos){
 				fila[0] = c.getId();
 				fila[1] = c.getCodigo();
-				fila[2] = c.getFechaInicio();
-				fila[3] = c.getFechaFin();
+				fila[2] = c.getFechaInicio("dd/MM/yyyy");
+				fila[3] = c.getFechaFin("dd/MM/yyyy");
 				fila[4] = c.getMonto();
 				fila[5] = c.getDiaPago();
 				fila[6] = c.getSponsor().getRazonSocial();
@@ -143,7 +150,7 @@ public class ViewContratos extends JPanel {
 	}
 	
 	private void editar(){
-		Contrato c = new Contrato();
+		Contrato c = mapearDeArray();
 		c.setId(0);
 		EditContrato ec = new EditContrato();
 		ec.open(c);

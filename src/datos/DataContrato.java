@@ -1,6 +1,5 @@
 package datos;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,7 +18,7 @@ public class DataContrato {
 			stmt=FactoryConnection.getInstancia().getConn().prepareStatement(query);
 			rs = stmt.executeQuery();
 			while (rs.next()){
-				Contrato c = new Contrato(rs.getDate("FechaInicio"), rs.getDate("FechaFin"), rs.getInt("DiaPago"), rs.getFloat("Monto"), rs.getString("Comentario"), rs.getString("Codigo"), rs.getInt("IdContrato"), rs.getInt("IdSponsor"), rs.getString("Descripcion"));
+				Contrato c = new Contrato(rs.getTimestamp("FechaInicio"), rs.getTimestamp("FechaFin"), rs.getInt("DiaPago"), rs.getFloat("Monto"), rs.getString("Comentario"), rs.getString("Codigo"), rs.getInt("IdContrato"), rs.getInt("IdSponsor"), rs.getString("Descripcion"));
 				contratos.add(c);
 			}
 		}
@@ -52,8 +51,8 @@ public class DataContrato {
 		try{
 			stmt = FactoryConnection.getInstancia().getConn().prepareStatement(query);
 			stmt.setInt(1, c.getSponsor().getId());
-			stmt.setDate(2, c.getFechaInicio());
-			stmt.setDate(3, c.getFechaFin());
+			stmt.setDate(2, new java.sql.Date(c.getFechaFin().getTime()));
+			stmt.setDate(3, new java.sql.Date(c.getFechaFin().getTime()));
 			stmt.setInt(4, c.getDiaPago());
 			stmt.setDouble(5, c.getMonto());
 			stmt.setString(6, c.getCodigo());
@@ -89,8 +88,8 @@ public class DataContrato {
 		try{
 			stmt=FactoryConnection.getInstancia().getConn().prepareStatement(query);
 			stmt.setInt(1, c.getSponsor().getId());
-			stmt.setDate(2, c.getFechaInicio());
-			stmt.setDate(3, c.getFechaFin());
+			stmt.setDate(2, new java.sql.Date(c.getFechaFin().getTime()));
+			stmt.setDate(3, new java.sql.Date(c.getFechaFin().getTime()));
 			stmt.setInt(4, c.getDiaPago());
 			stmt.setDouble(5, c.getMonto());
 			stmt.setString(6, c.getComentario());

@@ -6,11 +6,8 @@ import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 
-
-import gestionCobro.PanelGestionCobro;
 import publicidad.Publicidades;
 import sponsor.PanelSponsor;
-import sponsor.ViewSponsor;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;

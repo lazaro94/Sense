@@ -1,7 +1,8 @@
 package entidades;
 
-import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Contrato {
 	
@@ -42,17 +43,25 @@ public class Contrato {
 	
 	@Override
 	public boolean equals(Object obj){
-		return obj instanceof Contrato && ((Contrato)obj).getCodigo() == this.getCodigo(); 
+		return obj instanceof Contrato && ((Contrato)obj).getId() == this.getId(); 
 	}
 	
 	public Date getFechaInicio() {
 		return fechaInicio;
+	}
+	public String getFechaInicio(String format) {
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		return sdf.format(this.fechaInicio);
 	}
 	public void setFechaInicio(Date fechaInicio) {
 		this.fechaInicio = fechaInicio;
 	}
 	public Date getFechaFin() {
 		return fechaFin;
+	}
+	public String getFechaFin(String format) {
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		return sdf.format(this.fechaFin);
 	}
 	public void setFechaFin(Date fechaFin) {
 		this.fechaFin = fechaFin;
@@ -105,5 +114,4 @@ public class Contrato {
 	public void setPagos(ArrayList<Pago> pagos){
 		this.pagos=pagos;
 	}
-
 }

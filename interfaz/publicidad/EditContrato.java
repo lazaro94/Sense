@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
+import util.Validate;
 import entidades.Contrato;
 import entidades.Sponsor;
 import generic.GenericAbm;
@@ -35,6 +36,9 @@ public class EditContrato extends GenericAbm {
 	private JTextField textDescripcion;
 	private JTextField textComentario;
 	private JComboBox<Sponsor> comboSponsors;
+	private JDateChooser dateIni;
+	private JDateChooser dateFin;
+	private JDayChooser daySelect;
 	/**
 	 * Create the application.
 	 */
@@ -53,18 +57,19 @@ public class EditContrato extends GenericAbm {
 		frameEditContrato.getContentPane().setLayout(springLayout);
 		
 		JLabel lblCodigo = new JLabel("Codigo:");
-		springLayout.putConstraint(SpringLayout.WEST, lblCodigo, 23, SpringLayout.WEST, frameEditContrato.getContentPane());
+		springLayout.putConstraint(SpringLayout.NORTH, lblCodigo, 24, SpringLayout.NORTH, frameEditContrato.getContentPane());
+		springLayout.putConstraint(SpringLayout.WEST, lblCodigo, 10, SpringLayout.WEST, frameEditContrato.getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, lblCodigo, -507, SpringLayout.EAST, frameEditContrato.getContentPane());
 		frameEditContrato.getContentPane().add(lblCodigo);
 		
 		textCodigo = new JTextField();
-		springLayout.putConstraint(SpringLayout.NORTH, textCodigo, 21, SpringLayout.NORTH, frameEditContrato.getContentPane());
-		springLayout.putConstraint(SpringLayout.NORTH, lblCodigo, 3, SpringLayout.NORTH, textCodigo);
-		springLayout.putConstraint(SpringLayout.EAST, lblCodigo, -6, SpringLayout.WEST, textCodigo);
+		springLayout.putConstraint(SpringLayout.NORTH, textCodigo, -2, SpringLayout.NORTH, lblCodigo);
+		springLayout.putConstraint(SpringLayout.WEST, textCodigo, 23, SpringLayout.EAST, lblCodigo);
 		frameEditContrato.getContentPane().add(textCodigo);
 		textCodigo.setColumns(10);
 		
 		JLabel lblFechaInicio = new JLabel("Fecha Inicio:");
-		springLayout.putConstraint(SpringLayout.NORTH, lblFechaInicio, 35, SpringLayout.SOUTH, lblCodigo);
+		springLayout.putConstraint(SpringLayout.NORTH, lblFechaInicio, 33, SpringLayout.SOUTH, textCodigo);
 		springLayout.putConstraint(SpringLayout.WEST, lblFechaInicio, 10, SpringLayout.WEST, frameEditContrato.getContentPane());
 		frameEditContrato.getContentPane().add(lblFechaInicio);
 		
@@ -73,13 +78,13 @@ public class EditContrato extends GenericAbm {
 		frameEditContrato.getContentPane().add(lblFechaFin);
 		
 		JLabel lblMonto = new JLabel("Monto:");
-		springLayout.putConstraint(SpringLayout.EAST, lblMonto, 0, SpringLayout.EAST, lblFechaFin);
 		frameEditContrato.getContentPane().add(lblMonto);
 		
 		textMonto = new JTextField();
-		springLayout.putConstraint(SpringLayout.NORTH, textMonto, -3, SpringLayout.NORTH, lblMonto);
-		springLayout.putConstraint(SpringLayout.WEST, textMonto, 6, SpringLayout.EAST, lblMonto);
-		springLayout.putConstraint(SpringLayout.EAST, textMonto, -156, SpringLayout.EAST, frameEditContrato.getContentPane());
+		springLayout.putConstraint(SpringLayout.WEST, textMonto, 420, SpringLayout.WEST, frameEditContrato.getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, textMonto, -81, SpringLayout.EAST, frameEditContrato.getContentPane());
+		springLayout.putConstraint(SpringLayout.NORTH, lblMonto, 2, SpringLayout.NORTH, textMonto);
+		springLayout.putConstraint(SpringLayout.EAST, lblMonto, -6, SpringLayout.WEST, textMonto);
 		frameEditContrato.getContentPane().add(textMonto);
 		textMonto.setColumns(10);
 		
@@ -89,7 +94,6 @@ public class EditContrato extends GenericAbm {
 		frameEditContrato.getContentPane().add(lblDescripcion);
 		
 		textDescripcion = new JTextField();
-		springLayout.putConstraint(SpringLayout.WEST, textCodigo, 0, SpringLayout.WEST, textDescripcion);
 		springLayout.putConstraint(SpringLayout.NORTH, textDescripcion, -3, SpringLayout.NORTH, lblDescripcion);
 		springLayout.putConstraint(SpringLayout.WEST, textDescripcion, 77, SpringLayout.WEST, frameEditContrato.getContentPane());
 		frameEditContrato.getContentPane().add(textDescripcion);
@@ -130,28 +134,28 @@ public class EditContrato extends GenericAbm {
 		frameEditContrato.getContentPane().add(btnCancelar);
 		
 		JLabel lblDiaPago = new JLabel("Dia Pago:");
-		springLayout.putConstraint(SpringLayout.NORTH, lblMonto, 0, SpringLayout.NORTH, lblDiaPago);
 		springLayout.putConstraint(SpringLayout.NORTH, lblDiaPago, 43, SpringLayout.SOUTH, lblFechaInicio);
 		springLayout.putConstraint(SpringLayout.EAST, lblDiaPago, 0, SpringLayout.EAST, lblFechaInicio);
 		frameEditContrato.getContentPane().add(lblDiaPago);
 		
-		JDateChooser dateIni = new JDateChooser();
+		dateIni = new JDateChooser();
 		springLayout.putConstraint(SpringLayout.WEST, dateIni, 6, SpringLayout.EAST, lblFechaInicio);
 		springLayout.putConstraint(SpringLayout.SOUTH, dateIni, 0, SpringLayout.SOUTH, lblFechaInicio);
 		springLayout.putConstraint(SpringLayout.EAST, dateIni, -76, SpringLayout.WEST, lblFechaFin);
 		frameEditContrato.getContentPane().add(dateIni);
 		
-		JDateChooser dateFin = new JDateChooser();
+		dateFin = new JDateChooser();
+		springLayout.putConstraint(SpringLayout.NORTH, textMonto, 41, SpringLayout.SOUTH, dateFin);
 		springLayout.putConstraint(SpringLayout.WEST, dateFin, 345, SpringLayout.WEST, frameEditContrato.getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, dateFin, -81, SpringLayout.EAST, frameEditContrato.getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, lblFechaFin, -6, SpringLayout.WEST, dateFin);
 		springLayout.putConstraint(SpringLayout.SOUTH, dateFin, 0, SpringLayout.SOUTH, lblFechaInicio);
 		frameEditContrato.getContentPane().add(dateFin);
 		
-		JDayChooser dayChooser = new JDayChooser();
-		springLayout.putConstraint(SpringLayout.NORTH, dayChooser, 18, SpringLayout.SOUTH, dateIni);
-		springLayout.putConstraint(SpringLayout.WEST, dayChooser, 0, SpringLayout.WEST, textDescripcion);
-		frameEditContrato.getContentPane().add(dayChooser);
+		daySelect = new JDayChooser();
+		springLayout.putConstraint(SpringLayout.NORTH, daySelect, 18, SpringLayout.SOUTH, dateIni);
+		springLayout.putConstraint(SpringLayout.WEST, daySelect, 0, SpringLayout.WEST, textDescripcion);
+		frameEditContrato.getContentPane().add(daySelect);
 		
 		comboSponsors = new JComboBox<Sponsor>();
 		springLayout.putConstraint(SpringLayout.NORTH, comboSponsors, 21, SpringLayout.NORTH, frameEditContrato.getContentPane());
@@ -190,10 +194,14 @@ public class EditContrato extends GenericAbm {
 	protected void clickGuardar() {
 		// TODO Auto-generated method stub
 		lc = new LogicContrato();
+		if(!validarSeleccion()){
+			return;
+		}
 		try{
 			Sponsor s;
 			s = (Sponsor)comboSponsors.getSelectedItem(); // Viene el objeto completo con todos los atributos.
 			contratoAct=mapearDeFormulario();
+			contratoAct.setSponsor(s);
 			if(contratoAct.getId()>0){
 				lc.updateContrato(contratoAct);
 			}
@@ -222,6 +230,9 @@ public class EditContrato extends GenericAbm {
 		try{
 			contratoAct.setCodigo(textCodigo.getText());
 			contratoAct.setComentario(textComentario.getText());
+			contratoAct.setFechaFin(dateIni.getDate());
+			contratoAct.setFechaFin(dateFin.getDate());
+			contratoAct.setDiaPago(daySelect.getDay());
 			//contratoAct.setFechaFin(Parse.dateToSql(textFechaFin.getText()));
 			//contratoAct.setFechaInicio(Parse.dateToSql(textFechaIni.getText()));
 			contratoAct.setMonto(Float.valueOf(textMonto.getText()));
@@ -235,10 +246,26 @@ public class EditContrato extends GenericAbm {
 	private void mapearAFormulario(Contrato c) {
 		textCodigo.setText(c.getCodigo());
 		textComentario.setText(c.getComentario());
-		textMonto.setText(String.valueOf(c.getMonto()));
+		/*if(c.getMonto()!=0){
+			textMonto.setText(String.valueOf(c.getMonto()));
+		}
+		else{
+			textMonto.setText("");
+		}		*/
 		textDescripcion.setText(c.getDescripcion());
 	}
-	
+	private boolean validarSeleccion(){
+		Validate v = new Validate();
+		if(!v.notEmpty(new String[] {textCodigo.getText(), textMonto.getText(), dateFin.getDateFormatString(), dateIni.getDateFormatString()})){
+			super.informarError("Estos campos no pueden quedar vacíos", "Modificar contrato");
+			return false;
+		}
+		if(!v.numeroDecimal(new String[] {textMonto.getText()})){
+			super.informarError("Este campo debe contener sólo números", "Modificar contrato");
+			return false;
+		}
+		return true;
+	}
 	public void open(Contrato c){
 		contratoAct=c;
 		mapearAFormulario(contratoAct);

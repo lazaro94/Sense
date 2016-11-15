@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 
 public class Parse {
 
-	public static Date dateToSql(String fecha) throws Exception{
+	/*public static Date dateToSql(java.util.Date fecha) throws Exception{
 		java.sql.Date sqlDate = null;
 		try{
 			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -20,5 +20,5 @@ public class Parse {
 			throw new Exception("Error no controlado al intentar convertir las fechas");
 		}
 		return sqlDate;	
-	}
+	}*/
 }
