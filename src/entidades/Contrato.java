@@ -46,6 +46,10 @@ public class Contrato {
 		return obj instanceof Contrato && ((Contrato)obj).getId() == this.getId(); 
 	}
 	
+	public void generarPagos(){
+		
+	}
+	
 	public Date getFechaInicio() {
 		return fechaInicio;
 	}

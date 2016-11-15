@@ -60,5 +60,16 @@ public class LogicContrato {
 			throw ex;
 		}
 	}
-
+	public void anularContrato(Contrato c) throws Exception{
+		dc = new DataContrato();
+		try{
+			dc.anular(c);
+		}
+		catch(SQLException sqlex){
+			throw sqlex;
+		}
+		catch(Exception ex){
+			throw ex;
+		}
+	}
 }

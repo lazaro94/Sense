@@ -12,7 +12,7 @@ public class DataContrato {
 	public ArrayList<Contrato> contratos() throws Exception{
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String query = "SELECT FechaInicio, FechaFin, DiaPago, Monto, Comentario, IdContrato, Codigo, IdSponsor, Descripcion FROM contratos;";
+		String query = "SELECT FechaInicio, FechaFin, DiaPago, Monto, Comentario, IdContrato, Codigo, IdSponsor, Descripcion FROM contratos WHERE FechaBaja IS NULL;";
 		ArrayList<Contrato> contratos = new ArrayList<Contrato>();
 		try{
 			stmt=FactoryConnection.getInstancia().getConn().prepareStatement(query);
@@ -83,7 +83,7 @@ public class DataContrato {
 	}
 	
 	public void update(Contrato c) throws Exception{
-		PreparedStatement stmt;
+		PreparedStatement stmt=null;
 		String query = "UPDATE contratos SET IdSponsor=?, FechaInicio=?, FechaFin=?, DiaPago=?, Monto=?, Comentario=?, Codigo=?, Descripcion=? WHERE IdContrato=?";
 		try{
 			stmt=FactoryConnection.getInstancia().getConn().prepareStatement(query);
@@ -103,7 +103,50 @@ public class DataContrato {
 		}
 		catch(Exception ex){
 			throw new Exception("Error no controlado al intentar actualizar el contrato");
-		}		
+		}
+		finally{
+			try{
+				if(stmt!=null){
+					stmt.close();
+				}
+				FactoryConnection.getInstancia().releaseConn();
+			}
+			catch(SQLException sqlex){
+				throw new SQLException("Error la intentar cerrar la conexion");
+			}
+			catch(Exception ex){
+				throw new Exception ("Error no controlado al intentar cerrar las conexiones");
+			}
+		}
 	}
 
+	public void anular(Contrato c) throws Exception{
+		PreparedStatement stmt=null;
+		String query = "UPDATE contratos SET FechaBaja = now() WHERE IdContrato=?";
+		try{
+			stmt = FactoryConnection.getInstancia().getConn().prepareStatement(query);
+			stmt.setInt(1, c.getId());
+			stmt.executeUpdate();
+		}
+		catch(SQLException sqlex){
+			throw new SQLException("Error al intentar actualizar la baja del Contrato.");
+		}
+		catch(Exception ex){
+			throw new Exception("Error no controlado al intentar dar de baja el Contrato.");
+		}
+		finally{
+			try{
+				if(stmt!=null){
+					stmt.close();
+				}
+				FactoryConnection.getInstancia().releaseConn();
+			}
+			catch(SQLException sqlex){
+				throw new SQLException("Error la intentar cerrar la conexion");
+			}
+			catch(Exception ex){
+				throw new Exception ("Error no controlado al intentar cerrar las conexiones");
+			}
+		}
+	}
 }

@@ -35,6 +35,7 @@ public class EditContrato extends GenericAbm {
 	private JTextField textMonto;
 	private JTextField textDescripcion;
 	private JTextField textComentario;
+	private JLabel lblSponsor;
 	private JComboBox<Sponsor> comboSponsors;
 	private JDateChooser dateIni;
 	private JDateChooser dateFin;
@@ -95,25 +96,26 @@ public class EditContrato extends GenericAbm {
 		
 		textDescripcion = new JTextField();
 		springLayout.putConstraint(SpringLayout.NORTH, textDescripcion, -3, SpringLayout.NORTH, lblDescripcion);
-		springLayout.putConstraint(SpringLayout.WEST, textDescripcion, 77, SpringLayout.WEST, frameEditContrato.getContentPane());
+		springLayout.putConstraint(SpringLayout.WEST, textDescripcion, 14, SpringLayout.EAST, lblDescripcion);
+		springLayout.putConstraint(SpringLayout.EAST, textDescripcion, 0, SpringLayout.EAST, lblMonto);
 		frameEditContrato.getContentPane().add(textDescripcion);
 		textDescripcion.setColumns(10);
 		
 		JLabel lblComentario = new JLabel("Comentario:");
+		springLayout.putConstraint(SpringLayout.NORTH, lblComentario, 306, SpringLayout.NORTH, frameEditContrato.getContentPane());
 		springLayout.putConstraint(SpringLayout.WEST, lblComentario, 10, SpringLayout.WEST, frameEditContrato.getContentPane());
 		springLayout.putConstraint(SpringLayout.SOUTH, lblDescripcion, -27, SpringLayout.NORTH, lblComentario);
 		frameEditContrato.getContentPane().add(lblComentario);
 		
 		textComentario = new JTextField();
-		springLayout.putConstraint(SpringLayout.EAST, textDescripcion, 0, SpringLayout.EAST, textComentario);
-		springLayout.putConstraint(SpringLayout.WEST, textComentario, 8, SpringLayout.EAST, lblComentario);
-		springLayout.putConstraint(SpringLayout.EAST, textComentario, -205, SpringLayout.EAST, frameEditContrato.getContentPane());
-		springLayout.putConstraint(SpringLayout.NORTH, lblComentario, 3, SpringLayout.NORTH, textComentario);
+		springLayout.putConstraint(SpringLayout.NORTH, textComentario, -3, SpringLayout.NORTH, lblComentario);
+		springLayout.putConstraint(SpringLayout.WEST, textComentario, 16, SpringLayout.EAST, lblComentario);
+		springLayout.putConstraint(SpringLayout.EAST, textComentario, 0, SpringLayout.EAST, lblMonto);
 		frameEditContrato.getContentPane().add(textComentario);
 		textComentario.setColumns(10);
 		
 		JButton btnGuardar = new JButton("Guardar");
-		springLayout.putConstraint(SpringLayout.WEST, btnGuardar, -162, SpringLayout.EAST, frameEditContrato.getContentPane());
+		springLayout.putConstraint(SpringLayout.WEST, btnGuardar, 0, SpringLayout.WEST, lblMonto);
 		springLayout.putConstraint(SpringLayout.SOUTH, btnGuardar, -10, SpringLayout.SOUTH, frameEditContrato.getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, btnGuardar, -81, SpringLayout.EAST, frameEditContrato.getContentPane());
 		btnGuardar.addActionListener(new ActionListener() {
@@ -125,10 +127,11 @@ public class EditContrato extends GenericAbm {
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		springLayout.putConstraint(SpringLayout.WEST, btnCancelar, 75, SpringLayout.WEST, frameEditContrato.getContentPane());
-		springLayout.putConstraint(SpringLayout.SOUTH, textComentario, -26, SpringLayout.NORTH, btnCancelar);
-		springLayout.putConstraint(SpringLayout.NORTH, btnCancelar, 0, SpringLayout.NORTH, btnGuardar);
+		springLayout.putConstraint(SpringLayout.SOUTH, btnCancelar, -10, SpringLayout.SOUTH, frameEditContrato.getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, btnCancelar, 0, SpringLayout.EAST, textCodigo);
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				cancelar();
 			}
 		});
 		frameEditContrato.getContentPane().add(btnCancelar);
@@ -154,7 +157,7 @@ public class EditContrato extends GenericAbm {
 		
 		daySelect = new JDayChooser();
 		springLayout.putConstraint(SpringLayout.NORTH, daySelect, 18, SpringLayout.SOUTH, dateIni);
-		springLayout.putConstraint(SpringLayout.WEST, daySelect, 0, SpringLayout.WEST, textDescripcion);
+		springLayout.putConstraint(SpringLayout.WEST, daySelect, 6, SpringLayout.EAST, lblDiaPago);
 		frameEditContrato.getContentPane().add(daySelect);
 		
 		comboSponsors = new JComboBox<Sponsor>();
@@ -163,7 +166,7 @@ public class EditContrato extends GenericAbm {
 		
 		frameEditContrato.getContentPane().add(comboSponsors);
 		
-		JLabel lblSponsor = new JLabel("Sponsor:");
+		lblSponsor = new JLabel("Sponsor:");
 		springLayout.putConstraint(SpringLayout.NORTH, lblSponsor, 24, SpringLayout.NORTH, frameEditContrato.getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, lblSponsor, -249, SpringLayout.EAST, frameEditContrato.getContentPane());
 		springLayout.putConstraint(SpringLayout.WEST, comboSponsors, 6, SpringLayout.EAST, lblSponsor);
@@ -182,6 +185,7 @@ public class EditContrato extends GenericAbm {
 			for(Sponsor s : sponsors){
 				comboSponsors.addItem(s);
 			}
+			comboSponsors.setSelectedIndex(-1);
 		}
 		catch(SQLException sqlex){
 			super.informarError(sqlex.getMessage(), "Consultar Sponsors.");
@@ -233,8 +237,6 @@ public class EditContrato extends GenericAbm {
 			contratoAct.setFechaFin(dateIni.getDate());
 			contratoAct.setFechaFin(dateFin.getDate());
 			contratoAct.setDiaPago(daySelect.getDay());
-			//contratoAct.setFechaFin(Parse.dateToSql(textFechaFin.getText()));
-			//contratoAct.setFechaInicio(Parse.dateToSql(textFechaIni.getText()));
 			contratoAct.setMonto(Float.valueOf(textMonto.getText()));
 			contratoAct.setDescripcion(textDescripcion.getText());
 		}
@@ -245,30 +247,39 @@ public class EditContrato extends GenericAbm {
 	}
 	private void mapearAFormulario(Contrato c) {
 		textCodigo.setText(c.getCodigo());
+		textMonto.setText(String.valueOf(c.getMonto()));
 		textComentario.setText(c.getComentario());
-		/*if(c.getMonto()!=0){
-			textMonto.setText(String.valueOf(c.getMonto()));
-		}
-		else{
-			textMonto.setText("");
-		}		*/
 		textDescripcion.setText(c.getDescripcion());
+		dateIni.setDate(c.getFechaInicio());
+		dateFin.setDate(c.getFechaFin());
+		daySelect.setDay(c.getDiaPago());
 	}
 	private boolean validarSeleccion(){
 		Validate v = new Validate();
 		if(!v.notEmpty(new String[] {textCodigo.getText(), textMonto.getText(), dateFin.getDateFormatString(), dateIni.getDateFormatString()})){
-			super.informarError("Estos campos no pueden quedar vacíos", "Modificar contrato");
+			super.informarError("Estos campos no pueden quedar vacíos", "Modificar Contrato");
 			return false;
 		}
 		if(!v.numeroDecimal(new String[] {textMonto.getText()})){
-			super.informarError("Este campo debe contener sólo números", "Modificar contrato");
+			super.informarError("Este campo debe contener sólo números", "Modificar Contrato");
+			return false;
+		}
+		if(contratoAct.getId()<=0 && comboSponsors.getSelectedIndex()<0){
+			super.informarError("Debe seleccionar un sponsor", "Modificar Contrato");
 			return false;
 		}
 		return true;
 	}
+	private void cancelar(){
+		frameEditContrato.dispose();
+	}
 	public void open(Contrato c){
 		contratoAct=c;
 		mapearAFormulario(contratoAct);
+		if(c.getId()>0){
+			comboSponsors.setVisible(false);
+			lblSponsor.setText("Sponsor :" + c.getSponsor());
+		}
 		frameEditContrato.setVisible(true);
 	}
 }

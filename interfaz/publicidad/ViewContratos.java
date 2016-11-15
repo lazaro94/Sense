@@ -6,20 +6,23 @@ import javax.swing.table.DefaultTableModel;
 
 import logica.LogicContrato;
 import entidades.Contrato;
+import generic.Generic;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import java.awt.Component;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
-public class ViewContratos extends JPanel {
-
+public class ViewContratos extends Generic {
+	
 	private JTable tableContratos;
 	private LogicContrato lc;
 	private ArrayList<Contrato> contratos = new ArrayList<Contrato>();
@@ -71,12 +74,22 @@ public class ViewContratos extends JPanel {
 		panelButtons.add(lblnewlabel);
 		
 		JButton btnDetalle = new JButton("Detalle");
+		btnDetalle.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				detalle();
+			}
+		});
 		panelButtons.add(btnDetalle);
 		
 		JLabel lblNewLabel = new JLabel("  ");
 		panelButtons.add(lblNewLabel);
 		
 		JButton btnAnular = new JButton("Anular");
+		btnAnular.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				anular();
+			}
+		});
 		panelButtons.add(btnAnular);
 		
 		JLabel lblNewLabel_1 = new JLabel("  ");
@@ -95,6 +108,10 @@ public class ViewContratos extends JPanel {
 		
 		JRadioButton rbVencidos = new JRadioButton("Vencidos");
 		panelLeft.add(rbVencidos);
+		
+		ButtonGroup bg = new ButtonGroup();
+		bg.add(rbVencidos);
+		bg.add(rbActivos);
 		
 		loadContratos();
 	}
@@ -138,7 +155,8 @@ public class ViewContratos extends JPanel {
             tableContratos.getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
 			
 		}
-		catch(Exception ex){			
+		catch(Exception ex){
+			super.informarError(ex.getMessage(), "Consultar Contratos.");
 		}
 	}
 	
@@ -150,10 +168,39 @@ public class ViewContratos extends JPanel {
 	}
 	
 	private void editar(){
+		if(!validarSeleccion()){
+			return;
+		}
 		Contrato c = mapearDeArray();
-		c.setId(0);
 		EditContrato ec = new EditContrato();
 		ec.open(c);
+	}
+	private void anular(){
+		if(!validarSeleccion()){
+			return;
+		}
+		Contrato c = mapearDeArray();
+		lc = new LogicContrato();
+		try{
+			lc.anularContrato(c);
+			super.informarUsuario("Contrato anulado correctamente.", "Anular Contrato.");
+		}
+		catch(SQLException sqlex){
+			super.informarError(sqlex.getMessage(), "Anular Contrato.");
+		}
+		catch(Exception ex){
+			super.informarError(ex.getMessage(), "Anular Contrato.");
+		}
+	}
+	private void detalle(){
+		
+	}
+	private boolean validarSeleccion(){
+		if (tableContratos.getSelectedRow()<0){
+			super.informarError("Por favor seleccione un Contrato.", "Modificar Contrato.");
+			return false;
+		}
+		return true;
 	}
 
 }

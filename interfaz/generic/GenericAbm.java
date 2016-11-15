@@ -1,16 +1,6 @@
 package generic;
 
-import javax.swing.JOptionPane;
-
-public abstract class GenericAbm {
-	
-	protected void informarError(String mensaje, String titulo){
-		JOptionPane.showMessageDialog(null, mensaje, titulo, JOptionPane.ERROR_MESSAGE);
-	}
-
-	protected void informarUsuario(String mensaje, String titulo){
-		JOptionPane.showMessageDialog(null, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
-	}
+public abstract class GenericAbm extends Generic {
 	
 	protected abstract void clickGuardar();
 	
