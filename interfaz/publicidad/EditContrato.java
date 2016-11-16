@@ -234,7 +234,7 @@ public class EditContrato extends GenericAbm {
 		try{
 			contratoAct.setCodigo(textCodigo.getText());
 			contratoAct.setComentario(textComentario.getText());
-			contratoAct.setFechaFin(dateIni.getDate());
+			contratoAct.setFechaInicio(dateIni.getDate());
 			contratoAct.setFechaFin(dateFin.getDate());
 			contratoAct.setDiaPago(daySelect.getDay());
 			contratoAct.setMonto(Float.valueOf(textMonto.getText()));

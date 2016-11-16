@@ -2,7 +2,10 @@ package entidades;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+
+import util.AppException;
 
 public class Contrato {
 	
@@ -46,8 +49,37 @@ public class Contrato {
 		return obj instanceof Contrato && ((Contrato)obj).getId() == this.getId(); 
 	}
 	
-	public void generarPagos(){
-		
+	public void generarPagos() throws Exception{
+		int startMes=0;
+		int endMes=0;
+		int diffMonth=0;
+		try{//Creo 2 objetos calendario para restar los meses
+			Calendar startCalendar = Calendar.getInstance();
+            startCalendar.setTime(this.fechaInicio);
+            Calendar endCalendar = Calendar.getInstance();
+            endCalendar.setTime(this.fechaFin);
+            
+            startMes = (startCalendar.get(Calendar.YEAR) * 12) + startCalendar.get(Calendar.MONTH);
+            endMes = (endCalendar.get(Calendar.YEAR) * 12) + endCalendar.get(Calendar.MONTH);
+            diffMonth = endMes - startMes;
+            
+            if(diffMonth<=0){
+            	throw new AppException("La diferencia entre fechas es negativa");
+            }
+            for(int i=0; i<=diffMonth; i++){
+            	Pago p = new Pago();
+            	p.setContrato(this);
+            	p.setSponsor(this.sponsor);
+            	Date fecha = new Date(startCalendar.get(Calendar.YEAR), startCalendar.get(Calendar.MONTH), this.diaPago);
+            	p.setFechaVenc(fecha);
+            	this.pagos.add(p);
+            	startCalendar.add(Calendar.MONTH, 1);
+            }
+            
+		}
+		catch(Exception ex){
+			throw ex;
+		}
 	}
 	
 	public Date getFechaInicio() {
@@ -112,7 +144,7 @@ public class Contrato {
 	public void setSponsor (Sponsor sponsor){
 		this.sponsor=sponsor;
 	}
-	public ArrayList<Pago> getPago(){
+	public ArrayList<Pago> getPagos(){
 		return this.pagos;
 	}
 	public void setPagos(ArrayList<Pago> pagos){

@@ -14,8 +14,10 @@ public class LogicContrato {
 	
 	public void createContrato(Contrato c) throws Exception{		
 		dc = new DataContrato();
-		try{			
+		try{
+			c.generarPagos();
 			dc.insertContrato(c);
+			dc.insertPagos(c);
 		}
 		catch(SQLException sqlex){
 			throw sqlex;
