@@ -143,21 +143,21 @@ public class EditContrato extends GenericAbm {
 		
 		dateIni = new JDateChooser();
 		springLayout.putConstraint(SpringLayout.WEST, dateIni, 6, SpringLayout.EAST, lblFechaInicio);
+		springLayout.putConstraint(SpringLayout.EAST, dateIni, -317, SpringLayout.EAST, frameEditContrato.getContentPane());
+		springLayout.putConstraint(SpringLayout.WEST, lblFechaFin, 6, SpringLayout.EAST, dateIni);
 		springLayout.putConstraint(SpringLayout.SOUTH, dateIni, 0, SpringLayout.SOUTH, lblFechaInicio);
-		springLayout.putConstraint(SpringLayout.EAST, dateIni, -76, SpringLayout.WEST, lblFechaFin);
 		frameEditContrato.getContentPane().add(dateIni);
 		
 		dateFin = new JDateChooser();
 		springLayout.putConstraint(SpringLayout.NORTH, textMonto, 41, SpringLayout.SOUTH, dateFin);
 		springLayout.putConstraint(SpringLayout.WEST, dateFin, 345, SpringLayout.WEST, frameEditContrato.getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, dateFin, -81, SpringLayout.EAST, frameEditContrato.getContentPane());
-		springLayout.putConstraint(SpringLayout.EAST, lblFechaFin, -6, SpringLayout.WEST, dateFin);
 		springLayout.putConstraint(SpringLayout.SOUTH, dateFin, 0, SpringLayout.SOUTH, lblFechaInicio);
 		frameEditContrato.getContentPane().add(dateFin);
 		
 		daySelect = new JDayChooser();
-		springLayout.putConstraint(SpringLayout.NORTH, daySelect, 18, SpringLayout.SOUTH, dateIni);
 		springLayout.putConstraint(SpringLayout.WEST, daySelect, 6, SpringLayout.EAST, lblDiaPago);
+		springLayout.putConstraint(SpringLayout.SOUTH, daySelect, -14, SpringLayout.NORTH, textDescripcion);
 		frameEditContrato.getContentPane().add(daySelect);
 		
 		comboSponsors = new JComboBox<Sponsor>();
@@ -257,15 +257,19 @@ public class EditContrato extends GenericAbm {
 	private boolean validarSeleccion(){
 		Validate v = new Validate();
 		if(!v.notEmpty(new String[] {textCodigo.getText(), textMonto.getText(), dateFin.getDateFormatString(), dateIni.getDateFormatString()})){
-			super.informarError("Estos campos no pueden quedar vacíos", "Modificar Contrato");
+			super.informarError("Estos campos no pueden quedar vacíos", "Modificar Contrato.");
 			return false;
 		}
 		if(!v.numeroDecimal(new String[] {textMonto.getText()})){
-			super.informarError("Este campo debe contener sólo números", "Modificar Contrato");
+			super.informarError("Este campo debe contener sólo números", "Modificar Contrato.");
 			return false;
 		}
 		if(contratoAct.getId()<=0 && comboSponsors.getSelectedIndex()<0){
-			super.informarError("Debe seleccionar un sponsor", "Modificar Contrato");
+			super.informarError("Debe seleccionar un sponsor", "Modificar Contrato.");
+			return false;
+		}
+		if(dateFin.getDate().getTime() <= dateIni.getDate().getTime()){
+			super.informarError("La fecha de inicio no puede ser mayor a la de fin", "Modificar Contrato.");
 			return false;
 		}
 		return true;

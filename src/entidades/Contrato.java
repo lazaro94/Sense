@@ -53,12 +53,14 @@ public class Contrato {
 		int startMes=0;
 		int endMes=0;
 		int diffMonth=0;
-		try{//Creo 2 objetos calendario para restar los meses
+		try{
+			// Creo 2 objetos calendario para restar los meses //
 			Calendar startCalendar = Calendar.getInstance();
             startCalendar.setTime(this.fechaInicio);
             Calendar endCalendar = Calendar.getInstance();
             endCalendar.setTime(this.fechaFin);
             
+            // Calculo la diferencia en meses entre la fecha de inicio y la de fin //
             startMes = (startCalendar.get(Calendar.YEAR) * 12) + startCalendar.get(Calendar.MONTH);
             endMes = (endCalendar.get(Calendar.YEAR) * 12) + endCalendar.get(Calendar.MONTH);
             diffMonth = endMes - startMes;
@@ -66,6 +68,8 @@ public class Contrato {
             if(diffMonth<=0){
             	throw new AppException("La diferencia entre fechas es negativa");
             }
+            
+            // Por cada mes creo una pago con fecha de vencimiento el mes correspondiente y el dia de pago ingresado //
             for(int i=0; i<=diffMonth; i++){
             	Pago p = new Pago();
             	p.setContrato(this);

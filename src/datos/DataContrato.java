@@ -57,9 +57,10 @@ public class DataContrato {
 			stmt.setInt(4, c.getDiaPago());
 			stmt.setDouble(5, c.getMonto());
 			stmt.setString(6, c.getCodigo());
-			stmt.setString(7, c.getDescripcion());
-			
+			stmt.setString(7, c.getDescripcion());			
 			stmt.execute();
+			
+			insertPagos(c);
 		}
 		catch(SQLException sqlex){
 			throw new SQLException("Error al intentar registrar la publicidad");
@@ -159,8 +160,9 @@ public class DataContrato {
 			for(Pago p : c.getPagos()){
 				stmt.setDate(1, new java.sql.Date(p.getFechaVenc().getTime()));
 				stmt.setInt(2, p.getContrato().getId());
-				stmt.execute();
-			}						
+				stmt.addBatch();
+			}
+			stmt.executeBatch();
 		}
 		catch(SQLException sqlex){
 			throw new SQLException("Error al intentar registrar las cuotas");
