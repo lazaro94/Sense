@@ -50,6 +50,7 @@ public class DataContrato {
 		PreparedStatement stmt = null;
 		String query = "INSERT INTO contratos (idSponsor, FechaInicio, fechaFin, diaPago, Monto, Codigo, Descripcion) VALUES (?, ?, ?, ?, ?, ?, ?);";
 		try{
+			FactoryConnection.getInstancia().getConn().setAutoCommit(false);
 			stmt = FactoryConnection.getInstancia().getConn().prepareStatement(query);
 			stmt.setInt(1, c.getSponsor().getId());
 			stmt.setDate(2, new java.sql.Date(c.getFechaFin().getTime()));
@@ -59,8 +60,22 @@ public class DataContrato {
 			stmt.setString(6, c.getCodigo());
 			stmt.setString(7, c.getDescripcion());			
 			stmt.execute();
+			stmt.close();
+			// AGREGO TODOS LOS PAGOS GENERADOS //
 			
-			insertPagos(c);
+			query="INSERT INTO pago (FechaVenc, IdContrato, FechaPago) VALUES(?,?, NULL)";
+			stmt = FactoryConnection.getInstancia().getConn().prepareStatement(query);
+			
+			for(Pago p : c.getPagos()){
+				stmt.setDate(1, new java.sql.Date(p.getFechaVenc().getTime()));
+				stmt.setInt(2, p.getContrato().getId());
+				stmt.addBatch();
+			}
+			
+			// EJECUTO TODOS LOS INSERTS //
+			stmt.executeBatch();
+			FactoryConnection.getInstancia().getConn().commit();
+			
 		}
 		catch(SQLException sqlex){
 			throw new SQLException("Error al intentar registrar la publicidad");
@@ -70,6 +85,7 @@ public class DataContrato {
 		}
 		finally{
 			try{
+				FactoryConnection.getInstancia().getConn().setAutoCommit(true);
 				if(stmt!=null){
 					stmt.close();
 				}
@@ -135,40 +151,6 @@ public class DataContrato {
 		}
 		catch(Exception ex){
 			throw new Exception("Error no controlado al intentar dar de baja el Contrato.");
-		}
-		finally{
-			try{
-				if(stmt!=null){
-					stmt.close();
-				}
-				FactoryConnection.getInstancia().releaseConn();
-			}
-			catch(SQLException sqlex){
-				throw new SQLException("Error la intentar cerrar la conexion");
-			}
-			catch(Exception ex){
-				throw new Exception ("Error no controlado al intentar cerrar las conexiones");
-			}
-		}
-	}
-	
-	public void insertPagos(Contrato c) throws Exception{
-		PreparedStatement stmt = null;
-		String query = "INSERT INTO pago (FechaVenc, IdContrato, FechaPago) VALUES(?, ?, NULL)";
-		try{
-			stmt = FactoryConnection.getInstancia().getConn().prepareStatement(query);
-			for(Pago p : c.getPagos()){
-				stmt.setDate(1, new java.sql.Date(p.getFechaVenc().getTime()));
-				stmt.setInt(2, p.getContrato().getId());
-				stmt.addBatch();
-			}
-			stmt.executeBatch();
-		}
-		catch(SQLException sqlex){
-			throw new SQLException("Error al intentar registrar las cuotas");
-		}
-		catch(Exception ex){
-			throw new Exception("Error no controlado al intentar generar las cuotas");
 		}
 		finally{
 			try{

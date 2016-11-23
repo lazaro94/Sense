@@ -96,6 +96,11 @@ public class ViewContratos extends Generic {
 		panelButtons.add(lblNewLabel_1);
 		
 		JButton btnPago = new JButton("Registrar Pago");
+		btnPago.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				registrarPago();
+			}
+		});
 		panelButtons.add(btnPago);
 		
 		JPanel panelLeft = new JPanel();
@@ -191,6 +196,14 @@ public class ViewContratos extends Generic {
 		catch(Exception ex){
 			super.informarError(ex.getMessage(), "Anular Contrato.");
 		}
+	}
+	private void registrarPago(){
+		if(!validarSeleccion()){
+			return;
+		}
+		NewPago np = new NewPago();
+		Contrato c = mapearDeArray();
+		np.open(c);
 	}
 	private void detalle(){
 		

@@ -17,7 +17,6 @@ public class LogicContrato {
 		try{
 			c.generarPagos();
 			dc.insertContrato(c);
-			dc.insertPagos(c);
 		}
 		catch(SQLException sqlex){
 			throw sqlex;

@@ -74,7 +74,7 @@ public class Contrato {
             	Pago p = new Pago();
             	p.setContrato(this);
             	p.setSponsor(this.sponsor);
-            	Date fecha = new Date(startCalendar.get(Calendar.YEAR), startCalendar.get(Calendar.MONTH), this.diaPago);
+            	Date fecha = new Date(startCalendar.get(Calendar.YEAR)-1900, startCalendar.get(Calendar.MONTH), this.diaPago);
             	p.setFechaVenc(fecha);
             	this.pagos.add(p);
             	startCalendar.add(Calendar.MONTH, 1);
