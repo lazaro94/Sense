@@ -134,7 +134,7 @@ public class NewPago extends GenericAbm{
 		JButton btnGuardar = new JButton("Guardar");
 		springLayout.putConstraint(SpringLayout.WEST, btnGuardar, 0, SpringLayout.WEST, rdbtnOtro);
 		springLayout.putConstraint(SpringLayout.SOUTH, btnGuardar, -42, SpringLayout.SOUTH, framePago.getContentPane());
-		springLayout.putConstraint(SpringLayout.EAST, btnGuardar, -66, SpringLayout.EAST, framePago.getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, btnGuardar, 0, SpringLayout.EAST, label);
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				clickGuardar();
@@ -143,13 +143,13 @@ public class NewPago extends GenericAbm{
 		framePago.getContentPane().add(btnGuardar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		springLayout.putConstraint(SpringLayout.WEST, btnCancelar, 0, SpringLayout.WEST, label);
+		springLayout.putConstraint(SpringLayout.SOUTH, btnCancelar, -42, SpringLayout.SOUTH, framePago.getContentPane());
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				clickCancelar();
 			}
 		});
-		springLayout.putConstraint(SpringLayout.NORTH, btnCancelar, 0, SpringLayout.NORTH, btnGuardar);
-		springLayout.putConstraint(SpringLayout.WEST, btnCancelar, 0, SpringLayout.WEST, textComprobante);
 		springLayout.putConstraint(SpringLayout.EAST, btnCancelar, -53, SpringLayout.WEST, rdbtnOtro);
 		framePago.getContentPane().add(btnCancelar);
 	}
@@ -192,7 +192,6 @@ public class NewPago extends GenericAbm{
 				comboCuotas.addItem(p);
 			}			
 		}
-		comboCuotas.setSelectedIndex(0);
 	}
 	
 	private void mapearAFormulario(Pago p){

@@ -1,8 +1,10 @@
 package sponsor;
 
+import generic.GenericAbm;
+import logica.LogicContacto;
+
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -17,7 +19,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class ViewContactos extends JPanel {
+public class ViewContactos extends GenericAbm {
 	
 	private JTable tableContactos;
 	private JLabel lblSponsor;
@@ -129,20 +131,50 @@ public class ViewContactos extends JPanel {
 			
 		}
 		catch(Exception ex){
-			informarError(ex.getMessage(), "Visualizar Contactos");
+			super.informarError(ex.getMessage(), "Visualizar Contactos");
 		}		
 	}
 	
-	private void informarError(String mensaje, String titulo){
-		JOptionPane.showMessageDialog(this, mensaje, titulo, JOptionPane.ERROR_MESSAGE);
+	private boolean validarSeleccion(){
+		if(tableContactos.getSelectedRow()<0){
+			super.informarError("Por favor, seleccione un contacto", "Modificar Contactos");
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 	
 	private void eliminar(){
-		
+		if(!validarSeleccion()){
+			return;
+		}
+		if(!super.confirmarUsuario("Esta seguro que desea eliminar el contacto seleccionado?", "Eliminar Contactos")){
+			return;
+		}
+		LogicContacto lc = new LogicContacto();
+		try{
+			Contacto c = mapearDeFormulario();
+			lc.deleteContacto(c);
+			super.informarUsuario("Contacto eliminado correctamente.", "Eliminar Contacto");
+		}
+		catch (Exception ex){
+			super.informarError(ex.getMessage(), "Eliminar Contacto");
+		}
 	}
 	
 	private void editar(){
-		
+		if(!validarSeleccion()){
+			return;
+		}
+		try{
+			Contacto c = mapearDeFormulario();
+			EditContacto ec = new EditContacto();
+			ec.open(c);
+		}
+		catch(Exception ex){
+			super.informarError("Error no controlado al intentar abrir la ventana de edición.", "Editar Contacto");
+		}
 	}
 	
 	private void nuevo(){
@@ -150,6 +182,36 @@ public class ViewContactos extends JPanel {
 		c.setSponsor(s);
 		EditContacto ec = new EditContacto();
 		ec.open(c);
+	}
+
+	@Override
+	protected void clickGuardar() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void clickCancelar() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected Contacto mapearDeFormulario() {
+		// TODO Auto-generated method stub
+		Contacto c = new Contacto();
+		
+		c.setIdContacto(Integer.parseInt((String.valueOf(tableContactos.getValueAt(tableContactos.getSelectedRow(), 0)))));
+		c.setApellido(String.valueOf(tableContactos.getValueAt(tableContactos.getSelectedRow(), 1)));
+		c.setCargo(String.valueOf(tableContactos.getValueAt(tableContactos.getSelectedRow(), 3)));
+		c.setDireccion(String.valueOf(tableContactos.getValueAt(tableContactos.getSelectedRow(), 8)));
+		c.setDni(String.valueOf(tableContactos.getValueAt(tableContactos.getSelectedRow(), 4)));
+		c.setMail(String.valueOf(tableContactos.getValueAt(tableContactos.getSelectedRow(), 7)));
+		c.setNombre(String.valueOf(tableContactos.getValueAt(tableContactos.getSelectedRow(), 2)));
+		c.setTelefono1(String.valueOf(tableContactos.getValueAt(tableContactos.getSelectedRow(), 5)));
+		c.setTelefono2(String.valueOf(tableContactos.getValueAt(tableContactos.getSelectedRow(), 6)));
+		
+		return c;
 	}
 	
 	

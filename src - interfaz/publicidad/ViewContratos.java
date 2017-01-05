@@ -5,6 +5,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import logica.LogicContrato;
+import logica.LogicRegistrarPago;
 import entidades.Contrato;
 import generic.Generic;
 
@@ -202,8 +203,16 @@ public class ViewContratos extends Generic {
 			return;
 		}
 		NewPago np = new NewPago();
-		Contrato c = mapearDeArray();
-		np.open(c);
+		LogicRegistrarPago lrp = new LogicRegistrarPago();
+		try{
+			Contrato c = mapearDeArray();
+			lc = new LogicContrato();
+			c=lrp.setPagos(c);
+			np.open(c);
+		}
+		catch(Exception ex){
+			super.informarError(ex.getMessage(), "Error al intentar obtener datos de contrato");
+		}
 	}
 	private void detalle(){
 		

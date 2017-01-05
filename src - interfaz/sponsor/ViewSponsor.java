@@ -1,5 +1,6 @@
 package sponsor;
 
+import generic.GenericAbm;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -14,7 +15,7 @@ import entidades.Sponsor;
 import javax.swing.JLabel;
 import javax.swing.BoxLayout;
 
-public class ViewSponsor extends JPanel{
+public class ViewSponsor extends GenericAbm{
 	private JTable tableSponsors;
 	private LogicSponsor ls;
 	private EditSponsor es;
@@ -73,30 +74,16 @@ public class ViewSponsor extends JPanel{
             tableSponsors.getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
 		}
 		catch(SQLException sqlex){
-			informarError(sqlex.getMessage(), "Consultar Sponsors");
+			super.informarError(sqlex.getMessage(), "Consultar Sponsors");
 		}
 		catch(Exception ex){
-			informarError(ex.getMessage(), "Consultar Sponsors");
+			super.informarError(ex.getMessage(), "Consultar Sponsors");
 		}		
-	}
-	
-	private Sponsor mapearDeTabla(){
-		int id= Integer.parseInt(String.valueOf(tableSponsors.getValueAt(tableSponsors.getSelectedRow(), 0)));
-		Sponsor s = new Sponsor(id);
-		s=sponsors.get(sponsors.indexOf(s));
-		return s;
-	}
-	
-	private void informarError(String mensaje, String titulo){
-		JOptionPane.showMessageDialog(this, mensaje, titulo, JOptionPane.ERROR_MESSAGE);
-	}
-	private void informarUsuario(String mensaje, String titulo){
-		JOptionPane.showMessageDialog(this, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	private boolean validarSeleccion(){
 		if(tableSponsors.getSelectedRow()<0){
-			informarError("Por favor, seleccione un sponsor", "Modificar sponsors");
+			super.informarError("Por favor, seleccione un sponsor", "Modificar sponsors");
 			return false;
 		}
 		else {
@@ -111,27 +98,27 @@ public class ViewSponsor extends JPanel{
 		ls= new LogicSponsor();
 		Sponsor s;
 		try{
-			s=mapearDeTabla();
+			s=mapearDeFormulario();
 			ls.DeleteSponsor(s);
 			tableSponsors.removeRowSelectionInterval(tableSponsors.getSelectedRow(), tableSponsors.getSelectedRow());
 			informarUsuario("Sponsor eliminado correctamente", "Eliminar Sponsor");
 		}
 		catch(SQLException sqlex){
-			informarError(sqlex.getMessage(), "Eliminar Sponsor");
+			super.informarError(sqlex.getMessage(), "Eliminar Sponsor");
 		}
 		catch(Exception ex){
-			informarError(ex.getMessage(), "Eliminar Sponsor");
+			super.informarError(ex.getMessage(), "Eliminar Sponsor");
 		}
 	}
 	public void editar(){
 		Sponsor s;
 		try{
-			s=mapearDeTabla();
+			s=mapearDeFormulario();
 			es = new EditSponsor();
 			es.open(s);
 		}
 		catch(Exception ex){
-			informarError(ex.getMessage(), "Modificar Sponsor");
+			super.informarError(ex.getMessage(), "Modificar Sponsor");
 		}
 	}
 	public void nuevo(){
@@ -142,13 +129,34 @@ public class ViewSponsor extends JPanel{
 			es.open(s);
 		}
 		catch(Exception ex){
-			informarError(ex.getMessage(), "Modificar Sponsor");
+			super.informarError(ex.getMessage(), "Modificar Sponsor");
 		}
 	}
 	public Sponsor getSponsor() throws AppException{
 		if(!validarSeleccion()){
 			throw new AppException("Por favor, seleccione un sponsor");
 		}
-		return mapearDeTabla();
+		return mapearDeFormulario();
+	}
+
+	@Override
+	protected void clickGuardar() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void clickCancelar() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected Sponsor mapearDeFormulario() {
+		// TODO Auto-generated method stub
+		int id= Integer.parseInt(String.valueOf(tableSponsors.getValueAt(tableSponsors.getSelectedRow(), 0)));
+		Sponsor s = new Sponsor(id);
+		s=sponsors.get(sponsors.indexOf(s));
+		return s;
 	}
 }

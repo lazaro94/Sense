@@ -31,4 +31,14 @@ public class LogicContacto {
 			throw ex;
 		}
 	}
+	
+	public void deleteContacto(Contacto c) throws Exception{
+		dc = new DataContacto();
+		try{
+			dc.delete(c);
+		}
+		catch(Exception ex){
+			throw ex;
+		}
+	}
 }

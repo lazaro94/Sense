@@ -85,4 +85,31 @@ public class DataContacto {
 			}
 		}
 	}
+	
+	public void delete(Contacto c) throws Exception{
+		PreparedStatement stmt = null;
+		String query = "DELETE FROM contactos WHERE IdContacto=?";
+		try{
+			stmt = FactoryConnection.getInstancia().getConn().prepareStatement(query);
+			stmt.setInt(1, c.getIdContacto());
+			stmt.execute();
+		}
+		catch(SQLException sqlex){
+			throw new SQLException("Error al intentar eliminar el contacto de la tabla");
+		}
+		catch(Exception ex){
+			throw new SQLException("Error no controlado al intentar borrar el contacto");
+		}
+		finally{
+			try{
+				if(stmt!=null){
+					stmt.close();
+				}
+				FactoryConnection.getInstancia().releaseConn();
+			}
+			catch(Exception ex){
+				throw new Exception("Error no controlado al intentar cerrar la conexión.");
+			}
+		}
+	}
 }

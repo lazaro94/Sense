@@ -53,7 +53,7 @@ public class DataContrato {
 			FactoryConnection.getInstancia().getConn().setAutoCommit(false);
 			stmt = FactoryConnection.getInstancia().getConn().prepareStatement(query);
 			stmt.setInt(1, c.getSponsor().getId());
-			stmt.setDate(2, new java.sql.Date(c.getFechaFin().getTime()));
+			stmt.setDate(2, new java.sql.Date(c.getFechaInicio().getTime()));
 			stmt.setDate(3, new java.sql.Date(c.getFechaFin().getTime()));
 			stmt.setInt(4, c.getDiaPago());
 			stmt.setDouble(5, c.getMonto());

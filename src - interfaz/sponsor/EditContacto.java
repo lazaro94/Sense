@@ -16,6 +16,10 @@ import java.awt.event.ActionEvent;
 
 public class EditContacto extends GenericAbm{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JFrame frameEditContacto;
 	private LogicContacto lc;
 	private Contacto contactoAct;
