@@ -2,7 +2,8 @@ package logica;
 
 import java.sql.SQLException;
 
-import datos.DataContacto;
+import com.data.sponsor.DataContacto;
+
 import entidades.Contacto;
 
 public class LogicContacto {

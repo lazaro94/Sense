@@ -1,4 +1,4 @@
-package datos;
+package com.data.sponsor;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import entidades.Contrato;
-import entidades.Pago;
+import util.AppException;
 
 public class DataContrato {
 	
@@ -46,12 +46,12 @@ public class DataContrato {
 		return contratos;
 	}
 	
-	public void insertContrato(Contrato c) throws Exception{
+	public Contrato insertContrato(Contrato c) throws Exception{
 		PreparedStatement stmt = null;
+		ResultSet rs = null;
 		String query = "INSERT INTO contratos (idSponsor, FechaInicio, fechaFin, diaPago, Monto, Codigo, Descripcion) VALUES (?, ?, ?, ?, ?, ?, ?);";
 		try{
-			FactoryConnection.getInstancia().getConn().setAutoCommit(false);
-			stmt = FactoryConnection.getInstancia().getConn().prepareStatement(query);
+			stmt = FactoryConnection.getInstancia().getConn().prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
 			stmt.setInt(1, c.getSponsor().getId());
 			stmt.setDate(2, new java.sql.Date(c.getFechaInicio().getTime()));
 			stmt.setDate(3, new java.sql.Date(c.getFechaFin().getTime()));
@@ -59,23 +59,18 @@ public class DataContrato {
 			stmt.setDouble(5, c.getMonto());
 			stmt.setString(6, c.getCodigo());
 			stmt.setString(7, c.getDescripcion());			
-			stmt.execute();
-			stmt.close();
-			// AGREGO TODOS LOS PAGOS GENERADOS //
+			stmt.executeUpdate();
 			
-			query="INSERT INTO pago (FechaVenc, IdContrato, FechaPago) VALUES(?,?, NULL)";
-			stmt = FactoryConnection.getInstancia().getConn().prepareStatement(query);
-			
-			for(Pago p : c.getPagos()){
-				stmt.setDate(1, new java.sql.Date(p.getFechaVenc().getTime()));
-				stmt.setInt(2, p.getContrato().getId());
-				stmt.addBatch();
+			rs = stmt.getGeneratedKeys();
+			if(rs.next()){
+				c.setId(rs.getInt(1));
+			}else{
+				throw new AppException("No se pudieron recuperar los datos del contrato ingresado.");
 			}
-			
-			// EJECUTO TODOS LOS INSERTS //
-			stmt.executeBatch();
-			FactoryConnection.getInstancia().getConn().commit();
-			
+					
+		}
+		catch(AppException appex){
+			throw appex;
 		}
 		catch(SQLException sqlex){
 			throw new SQLException("Error al intentar registrar la publicidad");
@@ -85,7 +80,6 @@ public class DataContrato {
 		}
 		finally{
 			try{
-				FactoryConnection.getInstancia().getConn().setAutoCommit(true);
 				if(stmt!=null){
 					stmt.close();
 				}
@@ -98,6 +92,7 @@ public class DataContrato {
 				throw new Exception ("Error no controlado al intentar cerrar las conexiones");
 			}
 		}
+		return c;
 	}
 	
 	public void update(Contrato c) throws Exception{

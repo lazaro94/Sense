@@ -10,6 +10,8 @@ public class Pago {
 	private Date fechaPago;
 	private Date fechaVenc;
 	private Float recargo;
+	private Float descuento;
+	private Float importeAbonado;
 	
 	public Pago(){
 		sponsor = new Sponsor();
@@ -52,6 +54,39 @@ public class Pago {
 
 	public void setRecargo(Float recargo) {
 		this.recargo = recargo;
+	}
+	
+	public Float getImporteAbonado() {
+		return importeAbonado;
+	}
+
+	public void setImporteAbonado(Float abonado) {
+		this.importeAbonado = abonado;
+	}
+	
+	public Float getDescuento() {
+		return descuento;
+	}
+
+	public void setDescuento(Float descuento) {
+		this.descuento = descuento;
+	}
+
+	public Float Total(){
+		Float subtotal = this.importeAbonado;
+		if(descuento!=0){
+			subtotal = (subtotal - (subtotal*(descuento/100)));
+		}
+		if(recargo!=0){
+			subtotal = (subtotal + (subtotal*(descuento/100)));
+		}
+		return subtotal;
+	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return this.fechaVenc.toString();
 	}
 
 }

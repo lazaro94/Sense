@@ -1,4 +1,4 @@
-package datos;
+package com.data.sponsor;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

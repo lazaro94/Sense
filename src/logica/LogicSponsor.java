@@ -2,7 +2,9 @@ package logica;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import datos.DataSponsor;
+
+import com.data.sponsor.DataSponsor;
+
 import entidades.Sponsor;
 
 public class LogicSponsor {

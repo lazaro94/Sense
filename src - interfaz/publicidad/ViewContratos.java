@@ -5,7 +5,6 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import logica.LogicContrato;
-import logica.LogicRegistrarPago;
 import entidades.Contrato;
 import generic.Generic;
 
@@ -17,10 +16,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import java.awt.Component;
 import javax.swing.JRadioButton;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.awt.event.ActionEvent;
 
 public class ViewContratos extends Generic {
 	
@@ -47,62 +43,6 @@ public class ViewContratos extends Generic {
 		
 		tableContratos = new JTable();
 		this.add(tableContratos, BorderLayout.CENTER);
-		
-		JPanel panelButtons = new JPanel();
-		add(panelButtons, BorderLayout.SOUTH);
-		panelButtons.setLayout(new BoxLayout(panelButtons, BoxLayout.X_AXIS));
-		
-		JButton btnNuevo = new JButton("Nuevo");
-		btnNuevo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				nuevo();
-			}
-		});
-		panelButtons.add(btnNuevo);
-		
-		JLabel label_2 = new JLabel("  ");
-		panelButtons.add(label_2);
-		
-		JButton btnModificar = new JButton("Modificar");
-		btnModificar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				editar();
-			}
-		});
-		panelButtons.add(btnModificar);
-		
-		JLabel lblnewlabel = new JLabel("  ");
-		panelButtons.add(lblnewlabel);
-		
-		JButton btnDetalle = new JButton("Detalle");
-		btnDetalle.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				detalle();
-			}
-		});
-		panelButtons.add(btnDetalle);
-		
-		JLabel lblNewLabel = new JLabel("  ");
-		panelButtons.add(lblNewLabel);
-		
-		JButton btnAnular = new JButton("Anular");
-		btnAnular.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				anular();
-			}
-		});
-		panelButtons.add(btnAnular);
-		
-		JLabel lblNewLabel_1 = new JLabel("  ");
-		panelButtons.add(lblNewLabel_1);
-		
-		JButton btnPago = new JButton("Registrar Pago");
-		btnPago.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				registrarPago();
-			}
-		});
-		panelButtons.add(btnPago);
 		
 		JPanel panelLeft = new JPanel();
 		add(panelLeft, BorderLayout.WEST);
@@ -166,14 +106,14 @@ public class ViewContratos extends Generic {
 		}
 	}
 	
-	private void nuevo(){
+	public void nuevo(){
 		Contrato c = new Contrato();
 		c.setId(0);
 		EditContrato ec = new EditContrato();
 		ec.open(c);
 	}
 	
-	private void editar(){
+	public void editar(){
 		if(!validarSeleccion()){
 			return;
 		}
@@ -181,8 +121,11 @@ public class ViewContratos extends Generic {
 		EditContrato ec = new EditContrato();
 		ec.open(c);
 	}
-	private void anular(){
+	public void anular(){
 		if(!validarSeleccion()){
+			return;
+		}
+		if(!super.confirmarUsuario("Está seguro que desea anular el contrato seleccionado?", "Anular Contrato.")){
 			return;
 		}
 		Contrato c = mapearDeArray();
@@ -198,24 +141,18 @@ public class ViewContratos extends Generic {
 			super.informarError(ex.getMessage(), "Anular Contrato.");
 		}
 	}
-	private void registrarPago(){
+	public Contrato getContrato(){
 		if(!validarSeleccion()){
-			return;
+			return null;
 		}
-		NewPago np = new NewPago();
-		LogicRegistrarPago lrp = new LogicRegistrarPago();
+		Contrato c = new Contrato();
 		try{
-			Contrato c = mapearDeArray();
-			lc = new LogicContrato();
-			c=lrp.setPagos(c);
-			np.open(c);
+			c = mapearDeArray();
 		}
 		catch(Exception ex){
-			super.informarError(ex.getMessage(), "Error al intentar obtener datos de contrato");
+			super.informarError(ex.getMessage(), "Registro de pagos");
 		}
-	}
-	private void detalle(){
-		
+		return c;
 	}
 	private boolean validarSeleccion(){
 		if (tableContratos.getSelectedRow()<0){

@@ -1,6 +1,7 @@
 package logica;
 
-import datos.DataPago;
+import com.data.sponsor.DataPago;
+
 import entidades.Contrato;
 
 public class LogicRegistrarPago {
