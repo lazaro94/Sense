@@ -23,6 +23,12 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JPanel;
+import javax.swing.BoxLayout;
+import java.awt.Component;
+import javax.swing.JTable;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class RegistrarPago extends Generic{
 	private JTextField textImporte;
@@ -32,12 +38,12 @@ public class RegistrarPago extends Generic{
 	private JCheckBox chckbxDescuento;
 	private JCheckBox chckbxRecargo;
 	private JButton btnAgregarCuota;
-	private JButton btnRegistrarPago;
-	private ComprobantePagoSponsor comprobante = null;
 	private Contrato contratoAct;
+	private JPanel panelFooter;
+	private ViewComprobante vc = null;
 	
 	public RegistrarPago() {
-		setLayout(new MigLayout("", "[450px,grow]", "[21px][21px][][][][][][][][][]"));
+		setLayout(new MigLayout("", "[450px,grow]", "[21px][21px][][][][][][][][][grow]"));
 		
 		JLabel lblNewLabel = new JLabel("Cuota:");
 		add(lblNewLabel, "flowx,cell 0 1");
@@ -86,9 +92,8 @@ public class RegistrarPago extends Generic{
 		textRecargo.setColumns(10);
 		
 		chckbxRecargo = new JCheckBox("Efectuar Recargo");
-		chckbxRecargo.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
+		chckbxRecargo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				clickRecargo();
 			}
 		});
@@ -104,9 +109,8 @@ public class RegistrarPago extends Generic{
 		textDescuento.setColumns(10);
 		
 		chckbxDescuento = new JCheckBox("Efectuar Descuento");
-		chckbxDescuento.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
+		chckbxDescuento.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				clickDescuento();
 			}
 		});
@@ -120,8 +124,9 @@ public class RegistrarPago extends Generic{
 		});
 		add(btnAgregarCuota, "flowx,cell 0 9,alignx center");
 		
-		btnRegistrarPago = new JButton("Registrar Pago");
-		add(btnRegistrarPago, "cell 0 10,alignx right,aligny center");
+		panelFooter = new JPanel();
+		add(panelFooter, "cell 0 10,grow");
+		panelFooter.setLayout(new BoxLayout(panelFooter, BoxLayout.Y_AXIS));
 	}
 	
 	private void clickRecargo(){
@@ -199,6 +204,7 @@ public class RegistrarPago extends Generic{
 		Pago p;
 		Float importe;
 		p = (Pago)comboCuotas.getSelectedItem();
+		comboCuotas.removeItemAt(comboCuotas.getSelectedIndex());
 		importe = Float.valueOf(textImporte.getText());
 		p.setImporteAbonado(importe);
 		
@@ -224,11 +230,15 @@ public class RegistrarPago extends Generic{
 		if(!validarDatos()){
 			return;
 		}
-		if(comprobante==null){
-			comprobante = new ComprobantePagoSponsor();
-			comprobante.setContrato(contratoAct);
+		if(vc==null){
+			vc = new ViewComprobante();
+			vc.inicializar(contratoAct);
+			panelFooter.removeAll();
+			panelFooter.add(vc);
+			panelFooter.repaint();
+			panelFooter.revalidate();
 		}
-		comprobante.getCuotas().add(mapearPagoDeForm());
+		vc.addCuota(mapearPagoDeForm());
 	}
 
 }

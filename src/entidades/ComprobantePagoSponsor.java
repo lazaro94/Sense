@@ -39,7 +39,7 @@ public class ComprobantePagoSponsor {
 		this.contrato = contrato;
 	}
 
-	public ArrayList<Pago> getCuotas() {
+	public ArrayList<Pago> getCuotas(){
 		return cuotas;
 	}
 
